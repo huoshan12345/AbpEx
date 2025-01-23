@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+
+namespace AbpEx.Caching.Configuration;
+
+public class AbpCacheOptions : IReadOnlyCacheOptions
+{
+    public char? Separator { get; set; } = ':';
+    public TimeSpan DefaultExpiration { get; set; } = TimeSpan.FromDays(1);
+    public List<ICacheConfigurator> Configurators { get; } = [];
+
+    private readonly Lazy<string> _defaultGlobalPrefix = new(() => (Assembly.GetEntryAssembly() ?? typeof(ICache).Assembly).GetName().Name!.ToLower(), true);
+
+    private string? _globalPrefix;
+    /// <summary>
+    /// default value is lazy and the assembly name will be returned.
+    /// </summary>
+    public string GlobalPrefix
+    {
+        get => _globalPrefix ??= _defaultGlobalPrefix.Value;
+        set => _globalPrefix = value;
+    }
+
+    public AbpCacheOptions Configure(string name, Action<CacheOptions> action)
+    {
+        Configurators.Add(new CacheConfigurator(name, action));
+        return this;
+    }
+
+    public AbpCacheOptions ConfigureAll(Action<CacheOptions> action)
+    {
+        Configurators.Add(new CacheConfigurator(action));
+        return this;
+    }
+}

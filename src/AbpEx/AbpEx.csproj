@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- ReSharper disable once VulnerablePackage -->
+    <PackageReference Include="Volo.Abp.Core" Version="9.0.4" />
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
+    <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
+    <!-- ReSharper disable once VulnerablePackage -->
+    <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+    <PackageReference Include="FclEx.Serilog" Version="6.4.0" />
+  </ItemGroup>
+
+</Project>

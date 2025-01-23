@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <PackageTags>extensions;helpers</PackageTags>
+    <Authors>huoshan12345</Authors>
+    <Copyright>huoshan12345</Copyright>
+    <Description>Extensions for abp(https://github.com/abpframework/abp)</Description>
+    <PackageProjectUrl>https://github.com/huoshan12345/AbpEx</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/huoshan12345/AbpEx</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>

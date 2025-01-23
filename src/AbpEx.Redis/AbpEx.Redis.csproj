@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- ReSharper disable once VulnerablePackage -->
+    <PackageReference Include="EasyCaching.Redis" Version="1.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AbpEx\AbpEx.csproj" />
+  </ItemGroup>
+
+</Project>

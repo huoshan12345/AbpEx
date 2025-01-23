@@ -1,0 +1,18 @@
+// Global using directives
+
+global using System.Collections.Concurrent;
+global using System.Collections.Generic;
+global using System.Diagnostics.CodeAnalysis;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using EasyCaching.Core;
+global using AbpEx.Caching.Configuration;
+global using FclEx.DependencyInjection;
+global using FclEx.Logging;
+global using FclEx.Utils;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Volo.Abp;
+global using Volo.Abp.Modularity;
+global using Check = FclEx.Check;
