@@ -84,7 +84,7 @@ jobs:
         if: (success() || failure())
         with:
           name: Test Report
-          path: src/TestResults/**/*.trx
+          path: TestResults/**/*.trx
           reporter: dotnet-trx
           list-suites: failed
           list-tests: failed
