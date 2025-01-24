@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AbpEx.LightInject\AbpEx.LightInject.csproj" />
-    <ProjectReference Include="..\AbpEx.Tests\AbpEx.Tests.csproj" />
+    <ProjectReference Include="..\AbpEx.Core.Tests\AbpEx.Core.Tests.csproj" />
   </ItemGroup>
 
 </Project>

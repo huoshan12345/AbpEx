@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AbpEx\AbpEx.csproj" />
+    <ProjectReference Include="..\AbpEx.Core\AbpEx.Core.csproj" />
   </ItemGroup>
 
 </Project>

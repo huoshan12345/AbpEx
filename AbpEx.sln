@@ -5,9 +5,9 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AbpEx", "AbpEx", "{69F5031D-4FF2-4064-9CF9-4BCAED38B053}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpEx", "src\AbpEx\AbpEx.csproj", "{5586A8C8-258C-41F7-9E3A-139AD9810BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpEx.Core", "src\AbpEx.Core\AbpEx.Core.csproj", "{5586A8C8-258C-41F7-9E3A-139AD9810BD0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpEx.Tests", "test\AbpEx.Tests\AbpEx.Tests.csproj", "{B1971404-92E7-4518-8027-572976CB2FAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpEx.Core.Tests", "test\AbpEx.Core.Tests\AbpEx.Core.Tests.csproj", "{B1971404-92E7-4518-8027-572976CB2FAE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpEx.Redis", "src\AbpEx.Redis\AbpEx.Redis.csproj", "{4D484720-3F85-4D0D-8EC2-A304F30890B8}"
 EndProject

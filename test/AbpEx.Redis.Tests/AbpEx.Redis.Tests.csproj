@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AbpEx.Redis\AbpEx.Redis.csproj" />
-    <ProjectReference Include="..\AbpEx.Tests\AbpEx.Tests.csproj" />
+    <ProjectReference Include="..\AbpEx.Core.Tests\AbpEx.Core.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
