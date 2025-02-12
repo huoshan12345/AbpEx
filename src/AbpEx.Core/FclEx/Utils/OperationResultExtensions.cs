@@ -20,7 +20,7 @@ public static class OperationResultExtensions
         }
         else
         {
-            return result.ToExplicit<T>();
+            return result.CastTo<T>();
         }
     }
 
