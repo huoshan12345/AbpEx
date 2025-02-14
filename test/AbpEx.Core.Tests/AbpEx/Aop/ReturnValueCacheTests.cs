@@ -55,6 +55,11 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
             Thread.Sleep(SleepTime);
             return new Model($"{_id}_{id}");
         }
+
+        public override int GetHashCode()
+        {
+            return Id;
+        }
     }
 
     [Fact]
@@ -111,9 +116,11 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
     {
         var service = ServiceProvider.GetRequiredService<IService>();
         var itemFromStatic = service.GetStatic(no);
+
         for (var i = 0; i < 2; i++)
         {
             var tempService = ServiceProvider.GetRequiredService<IService>();
+
             var (_, fromStatic, _, timeFromStatic) = Operation.Execute(() => tempService.GetStatic(no));
             var (_, fromInstance, _, timeFromInstance) = Operation.Execute(() => tempService.Get(no));
 
