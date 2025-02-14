@@ -1,3 +1,4 @@
+using Meziantou.Xunit;
 using xRetry;
 
 namespace AbpEx.Aop;
@@ -66,7 +67,7 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
 
     [RetryTheory]
     [MemberData(nameof(Numbers))]
-    public void TestSingle(int no)
+    public void SameInstance_Test(int no)
     {
         var service = ServiceProvider.GetRequiredService<IService>();
         var itemFromStatic = service.GetStatic(no);
@@ -90,9 +91,10 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
         }
     }
 
+    [DisableParallelization] // this test rely on the instance id so it should be run in sequence
     [RetryTheory]
     [MemberData(nameof(Numbers))]
-    public void TestMultiple(int no)
+    public void DifferentInstance_Test(int no)
     {
         var service = ServiceProvider.GetRequiredService<IService>();
         var itemFromStatic = service.GetStatic(no);

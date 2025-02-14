@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <!-- ReSharper disable once VulnerablePackage -->
-    <PackageReference Include="Volo.Abp.Core" Version="9.0.4" />
+    <PackageReference Include="Volo.Abp.Core" Version="9.0.5" />
     <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
     <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
     <!-- ReSharper disable once VulnerablePackage -->
@@ -10,7 +10,12 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
-    <PackageReference Include="FclEx.Serilog" Version="1.2.0" />
+    <PackageReference Include="FclEx.Serilog" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$([MSBuild]::VersionLessThan($(TargetFrameworkVersion), 8.0))">
+    <!--net6.0 and net7.0 require this package to support CollectionBuilder-->
+    <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,6 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
 {
     public const string CacheName = "ReturnValueCache";
     private static readonly MethodInfo _taskFromResult = typeof(Task).GetMethod(nameof(Task.FromResult))!;
-    private static readonly MethodInfo _toValueTask = typeof(ValueTask).GetMethod(nameof(ValueTask.FromResult))!;
     private static readonly ConcurrentDictionary<IServiceProvider, Context> _cache = new();
 
     private bool? _isStatic;
@@ -35,7 +34,7 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
             if (method.IsStatic == false && _isStatic != true)
             {
                 m.Append(separator);
-                m.Append(instance.GetHashCodeSafely());
+                m.Append(instance?.GetHashCode() ?? 0);
             }
             var hash = Hash(parameters);
             m.Append(separator);
@@ -47,11 +46,11 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
             using var hash = IncrementalHash.CreateHash(HashAlgorithmName.MD5);
             foreach (var parameter in parameters)
             {
-                var id = parameter.GetHashCodeSafely();
-                var span = Span.AsBytes(ref id);
-                hash.AppendData(span);
+                var id = parameter?.GetHashCode() ?? 0;
+                var bytes = BitConverter.GetBytes(id);
+                hash.AppendData(bytes);
             }
-            return hash.GetCurrentHash().ToHex();
+            return hash.GetHashAndReset().ToHex();
         }
     }
 
@@ -73,7 +72,7 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
         var cache = cacheManager.GetCache<byte[]>(CacheName);
         var key = GetKey(method, context.Proxy, context.Parameters, cacheManager.CacheOptions.Separator);
 
-        if (!cache.TryGet(key, out var str))
+        if (cache.TryGet(key, out var str) == false)
         {
             await context.Invoke(next);
             var value = context.IsAsync()
@@ -82,39 +81,42 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
 
             str = serializer.Serialize(value);
             cache.TrySet(key, str, _expire);
-        }
-        else
-        {
-            if (context.IsAsync())
-            {
-                var returnTypeOfGeneric = returnType.GetGenericTypeDefinition();
-                var objType = returnType.GenericTypeArguments[0];
 
-                var item = serializer.Deserialize(str, objType);
-                if (returnTypeOfGeneric == typeof(Task<>))
-                {
-                    var m = _taskFromResult.MakeGenericMethod(objType);
-                    context.ReturnValue = m.Invoke(null, [item]);
-                }
-                else if (returnTypeOfGeneric == typeof(ValueTask<>))
-                {
-                    var m = _toValueTask.MakeGenericMethod(objType);
-                    context.ReturnValue = m.Invoke(null, [item]);
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
+            if (logger.IsEnabled(LogLevel.Debug))
+                logger.LogDebug("[{CacheName}][{CacheProvider}][{Method}]Cache miss", CacheName, cache.ProviderType.Name, method.GetFullName());
+
+            return;
+        }
+
+        if (context.IsAsync())
+        {
+            var returnTypeOfGeneric = returnType.GetGenericTypeDefinition();
+            var objType = returnType.GenericTypeArguments[0];
+
+            var item = serializer.Deserialize(str, objType);
+            if (returnTypeOfGeneric == typeof(Task<>))
+            {
+                var m = _taskFromResult.MakeGenericMethod(objType);
+                context.ReturnValue = m.Invoke(null, [item]);
+            }
+            else if (returnTypeOfGeneric == typeof(ValueTask<>))
+            {
+                var m = typeof(ValueTask<>).MakeGenericType(objType);
+                context.ReturnValue = Activator.CreateInstance(m, [item]);
             }
             else
             {
-                var item = serializer.Deserialize(str, returnType);
-                context.ReturnValue = item;
+                throw new InvalidOperationException();
             }
-
-            if (logger.IsEnabled(LogLevel.Trace))
-                logger.LogTrace("[{CacheName}][{CacheProvider}][{Method}]Cache hit", CacheName, cache.ProviderType.Name, method.GetFullName());
         }
+        else
+        {
+            var item = serializer.Deserialize(str, returnType);
+            context.ReturnValue = item;
+        }
+
+        if (logger.IsEnabled(LogLevel.Debug))
+            logger.LogDebug("[{CacheName}][{CacheProvider}][{Method}]Cache hit", CacheName, cache.ProviderType.Name, method.GetFullName());
     }
 
     private static Context GetContext(IServiceProvider provider)
