@@ -104,15 +104,11 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
         Assert.True(_errorCount >= 3); // Retry 3 times
     }
 
-    private static readonly AsyncLock _lock = new();
-
     [DisableParallelization] // this test rely on the instance id so it should be run in sequence
     [RetryTheory]
     [MemberData(nameof(Numbers))]
     public void DifferentInstance_Test(int no)
     {
-        using var x = _lock.Lock(); // it seems that DisableParallelization does not work every time as expected, so we need to lock the test
-
         var service = ServiceProvider.GetRequiredService<IService>();
         var itemFromStatic = service.GetStatic(no);
         for (var i = 0; i < 2; i++)
