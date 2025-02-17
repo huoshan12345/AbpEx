@@ -70,7 +70,10 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
 
         var (cacheManager, serializer, logger) = GetContext(provider);
         var cache = cacheManager.GetCache<byte[]>(CacheName);
-        var key = GetKey(method, context.Proxy, context.Parameters, cacheManager.CacheOptions.Separator);
+
+        // NOTE: we need to use context.Implementation instead of context.Proxy because we use the hashcode to identify the instance
+        //      and the hashcode of the proxy is different from the hashcode of the implementation
+        var key = GetKey(method, context.Implementation, context.Parameters, cacheManager.CacheOptions.Separator);
 
         if (cache.TryGet(key, out var str) == false)
         {
