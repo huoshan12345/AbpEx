@@ -3,6 +3,7 @@ using xRetry;
 
 namespace AbpEx.Aop;
 
+[DisableParallelization] // this test rely on the instance id so it should be run in sequence
 public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTestModule>(output)
 {
     public static readonly TimeSpan CacheMaxTime = TimeSpan.FromMilliseconds(50);
@@ -99,7 +100,6 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
 
     private static int _errorCount;
 
-    [DisableParallelization]
     [RetryFact]
     public void Error_Test()
     {
@@ -109,7 +109,6 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
         Assert.True(_errorCount >= 3); // Retry 3 times
     }
 
-    [DisableParallelization] // this test rely on the instance id so it should be run in sequence
     [RetryTheory]
     [MemberData(nameof(Numbers))]
     public void DifferentInstance_Test(int no)

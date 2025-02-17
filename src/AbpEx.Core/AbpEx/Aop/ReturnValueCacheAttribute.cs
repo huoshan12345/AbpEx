@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography;
+using AbpEx.Caching;
 using AspectCore.DynamicProxy;
 
 namespace AbpEx.Aop;
@@ -18,11 +19,11 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
         get => _isStatic ?? default;
     }
 
-    private TimeSpan? _expire;
-    public TimeSpan Expire
+    private int? _expireSeconds;
+    public int ExpireSeconds
     {
-        set => _expire = value;
-        get => _expire ?? default;
+        set => _expireSeconds = value;
+        get => _expireSeconds ?? default;
     }
 
     // null instance means a static key
@@ -46,8 +47,8 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
             using var hash = IncrementalHash.CreateHash(HashAlgorithmName.MD5);
             foreach (var parameter in parameters)
             {
-                var id = parameter?.GetHashCode() ?? 0;
-                var bytes = BitConverter.GetBytes(id);
+                var value = parameter?.GetHashCode() ?? 0;
+                var bytes = BitConverter.GetBytes(value);
                 hash.AppendData(bytes);
             }
             return hash.GetHashAndReset().ToHex();
@@ -64,7 +65,7 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
             || returnType == typeof(Task)
             || returnType == typeof(ValueTask))
         {
-            await context.Invoke(next).IgnoreSyncContext();
+            await context.Invoke(next);
             return;
         }
 
@@ -83,7 +84,12 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
                 : context.ReturnValue;
 
             str = serializer.Serialize(value);
-            cache.TrySet(key, str, _expire);
+
+            TimeSpan? expire = _expireSeconds is null
+                ? null
+                : TimeSpan.FromSeconds(_expireSeconds.Value);
+
+            cache.TrySet(key, str, expire);
 
             if (logger.IsEnabled(LogLevel.Debug))
                 logger.LogDebug("[{CacheName}][{CacheProvider}][{Method}]Cache miss", CacheName, cache.ProviderType.Name, method.GetFullName());
@@ -109,7 +115,7 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
             }
             else
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("unknown return type: " + returnType.ShortName());
             }
         }
         else
