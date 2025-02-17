@@ -3,7 +3,6 @@ using xRetry;
 
 namespace AbpEx.Aop;
 
-[DisableParallelization] // this test rely on the instance id so it should be run in sequence
 public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTestModule>(output)
 {
     public static readonly TimeSpan CacheMaxTime = TimeSpan.FromMilliseconds(50);
@@ -54,7 +53,7 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
         public Model Get(int id)
         {
             Thread.Sleep(SleepTime);
-            return new Model($"{_id}_{id}");
+            return new Model($"{Id}_{id}");
         }
 
         public override int GetHashCode()
