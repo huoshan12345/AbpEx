@@ -118,10 +118,10 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
 
         for (var i = 0; i < 2; i++)
         {
-            var tempService = ServiceProvider.GetRequiredService<IService>();
+            var tempService = ServiceProvider.GetRequiredService<IService>(); // new instance
 
             var (_, fromStatic, _, timeFromStatic) = Operation.Execute(() => tempService.GetStatic(no));
-            var (_, fromInstance, _, timeFromInstance) = Operation.Execute(() => tempService.Get(no));
+            var (_, fromInstance, _, timeFromInstance) = Operation.Execute(() => tempService.Get(no)); // should not be cached
 
             Assert.NotNull(fromStatic);
             Assert.Equal(itemFromStatic.Id, fromStatic.Id);
