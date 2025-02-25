@@ -3,7 +3,7 @@ namespace AbpEx.Redis;
 public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
 {
     public record Model(int Id, string? Name, int Age, int? CoinCount = null);
-    
+
     private void Test<T>(string key, T value)
     {
         var provider = ServiceProvider.GetRequiredService<IEasyCachingProvider>();
@@ -22,7 +22,7 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
     [RetryFact]
     public void Basic_Test()
     {
-        const string name = nameof(Basic_Test);
+        var name = nameof(Basic_Test) + Environment.Version.Major;
         var provider = ServiceProvider.GetRequiredService<IEasyCachingProvider>();
         Assert.IsType<PatchedRedisCachingProvider>(provider);
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
@@ -64,7 +64,7 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
     public void GetAll_Test()
     {
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
-        var cache = cacheManager.GetCache<string>(nameof(GetAll_Test));
+        var cache = cacheManager.GetCache<string>(nameof(GetAll_Test) + Environment.Version.Major);
         var keys = Enumerable.Range(1, 3).Select(m => m.ToString()).ToArray();
         cache.RemoveAll(keys);
         foreach (var key in keys)
@@ -86,7 +86,7 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
     public async Task GetAllAsync_Test()
     {
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
-        var cache = cacheManager.GetCache<string>(nameof(GetAllAsync_Test));
+        var cache = cacheManager.GetCache<string>(nameof(GetAllAsync_Test) + Environment.Version.Major);
         var keys = Enumerable.Range(1, 3).Select(m => m.ToString()).ToArray();
         await cache.RemoveAllAsync(keys);
         foreach (var key in keys)
