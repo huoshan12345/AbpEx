@@ -2,18 +2,12 @@ using System;
 
 namespace AbpEx.Caching.Configuration;
 
-internal class CacheConfigurator : ICacheConfigurator
+internal class CacheConfigurator(string cacheName, Action<CacheOptions> action) : ICacheConfigurator
 {
-    public string CacheName { get; }
-    public Action<CacheOptions> Action { get; }
+    public string CacheName { get; } = cacheName;
+    public Action<CacheOptions> Action { get; } = action;
 
-    public CacheConfigurator(Action<CacheOptions> Action) : this(string.Empty, Action)
+    public CacheConfigurator(Action<CacheOptions> action) : this(string.Empty, action)
     {
-    }
-
-    public CacheConfigurator(string cacheName, Action<CacheOptions> action)
-    {
-        CacheName = cacheName;
-        Action = action;
     }
 }
