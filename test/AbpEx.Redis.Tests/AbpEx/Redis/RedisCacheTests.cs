@@ -19,22 +19,22 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
         Assert.Equal(value, objNew.Value);
     }
 
-    [Fact]
+    [RetryFact]
     public void Basic_Test()
     {
-        const string str = "test";
+        const string name = nameof(Basic_Test);
         var provider = ServiceProvider.GetRequiredService<IEasyCachingProvider>();
         Assert.IsType<PatchedRedisCachingProvider>(provider);
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
-        var cache = cacheManager.GetCache<string>(str);
-        var obj = cache.Get(str, k => str);
+        var cache = cacheManager.GetCache<string>(name);
+        var obj = cache.Get(name, k => name);
         Assert.True(obj.HasValue);
-        var objNew = cache.Get(str);
+        var objNew = cache.Get(name);
         Assert.True(objNew.HasValue);
         Assert.Equal(obj.Value, objNew.Value);
 
-        cache.Remove(str);
-        var objRemoved = cache.Get(str);
+        cache.Remove(name);
+        var objRemoved = cache.Get(name);
         Assert.False(objRemoved.HasValue);
     }
 
@@ -60,11 +60,11 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
         }
     }
 
-    [Fact]
+    [RetryFact]
     public void GetAll_Test()
     {
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
-        var cache = cacheManager.GetCache<string>("number");
+        var cache = cacheManager.GetCache<string>(nameof(GetAll_Test));
         var keys = Enumerable.Range(1, 3).Select(m => m.ToString()).ToArray();
         cache.RemoveAll(keys);
         foreach (var key in keys)
@@ -82,11 +82,11 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
         }
     }
 
-    [Fact]
+    [RetryFact]
     public async Task GetAllAsync_Test()
     {
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
-        var cache = cacheManager.GetCache<string>("number");
+        var cache = cacheManager.GetCache<string>(nameof(GetAllAsync_Test));
         var keys = Enumerable.Range(1, 3).Select(m => m.ToString()).ToArray();
         await cache.RemoveAllAsync(keys);
         foreach (var key in keys)

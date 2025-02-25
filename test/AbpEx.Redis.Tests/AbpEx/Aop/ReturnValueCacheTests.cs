@@ -49,7 +49,7 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
         public Model Get(int id)
         {
             Thread.Sleep(SleepMilliseconds);
-            return new Model($"{_id}_{id}");
+            return new Model($"{Id}_{id}");
         }
     }
 
