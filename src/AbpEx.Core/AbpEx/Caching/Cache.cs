@@ -37,7 +37,8 @@ internal sealed class Cache<T> : ICache<T>
         return prefix;
     }
 
-    private static readonly ConcurrentDictionary<string, string> _keys = new();
+    // NOTE: cannot make _keys static because it cannot be shared between different cache instances.
+    private readonly ConcurrentDictionary<string, string> _keys = new();
     private string GetKey(string key)
     {
         if (key.IsNullOrEmpty())
@@ -127,7 +128,7 @@ internal sealed class Cache<T> : ICache<T>
 
     public async Task<IDictionary<string, CacheValue<T>>> GetAllAsync(IEnumerable<string> cacheKeys)
     {
-        var dic = await _provider.GetAllAsync<T>(cacheKeys.Select(GetKey)).IgnoreSyncContext();
+        var dic = await _provider.GetAllAsync<T>(cacheKeys.Select(GetKey));
         return dic.ToDictionary(m => TrimKeyPrefix(m.Key), m => m.Value);
     }
 }

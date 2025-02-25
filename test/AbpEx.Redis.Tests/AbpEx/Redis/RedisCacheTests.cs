@@ -91,15 +91,16 @@ public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
         await cache.RemoveAllAsync(keys);
         foreach (var key in keys)
         {
-            Assert.False(await cache.ExistsAsync(key));
+            var exist = await cache.ExistsAsync(key);
+            Assert.False(exist, key);
             await cache.SetAsync(key, key + key, TimeSpan.FromHours(1));
         }
         var all = await cache.GetAllAsync(keys);
 
         foreach (var key in keys)
         {
-            Assert.True(all.TryGetValue(key, out var value));
-            Assert.True(value.HasValue);
+            AssertEx.True(all.TryGetValue(key, out var value), () => $"keys: {all.Keys.JoinWith(" ")}, cache key: {cache.Prefix}");
+            Assert.True(value!.HasValue);
             Assert.Equal(key + key, value.Value);
         }
     }
