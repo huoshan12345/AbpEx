@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using AbpEx.Redis;
 using AspectCore.DynamicProxy;
 
@@ -24,10 +25,10 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
         int Id { get; }
 
         [ReturnValueCache(IsStatic = true)]
-        Model GetStatic(int id);
+        Model GetStatic(string id);
 
         [ReturnValueCache]
-        Model Get(int id);
+        Model Get(string id);
     }
 
     public class Service : IService
@@ -40,13 +41,13 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
             Id = Interlocked.Increment(ref _id);
         }
 
-        public Model GetStatic(int id)
+        public Model GetStatic(string id)
         {
             Thread.Sleep(SleepMilliseconds);
-            return new Model(id.ToString());
+            return new Model(id);
         }
 
-        public Model Get(int id)
+        public Model Get(string id)
         {
             Thread.Sleep(SleepMilliseconds);
             return new Model($"{Id}_{id}");
@@ -65,10 +66,11 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
     [MemberData(nameof(Numbers))]
     public void IsStatic_SameObject_Test(int no)
     {
+        var name = nameof(IsStatic_SameObject_Test) + no;
         var service = ServiceProvider.GetRequiredService<IService>();
-        var itemFromStatic = service.GetStatic(no);
+        var itemFromStatic = service.GetStatic(name);
 
-        var (_, tempItem, _, t) = Operation.Execute(() => service.GetStatic(no));
+        var (_, tempItem, _, t) = Operation.Execute(() => service.GetStatic(name));
         Assert.NotNull(tempItem);
         Assert.Equal(itemFromStatic.Id, tempItem.Id);
         Assert.True(t.TotalMilliseconds < CacheMaxMilliseconds, t.TotalSeconds.ToString());
@@ -78,11 +80,12 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
     [MemberData(nameof(Numbers))]
     public void IsStatic_DiffObject_Test(int no)
     {
+        var name = nameof(IsStatic_DiffObject_Test) + no;
         var service = ServiceProvider.GetRequiredService<IService>();
-        var itemFromStatic = service.GetStatic(no);
+        var itemFromStatic = service.GetStatic(name);
 
         var tempService = ServiceProvider.GetRequiredService<IService>();
-        var (_, fromStatic, _, t) = Operation.Execute(() => tempService.GetStatic(no));
+        var (_, fromStatic, _, t) = Operation.Execute(() => tempService.GetStatic(name));
         Assert.NotNull(fromStatic);
         Assert.Equal(itemFromStatic.Id, fromStatic.Id);
         Assert.True(t.TotalMilliseconds < CacheMaxMilliseconds, t.TotalSeconds.ToString());
@@ -93,10 +96,11 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
     [MemberData(nameof(Numbers))]
     public void NotStatic_SameObject_Test(int no)
     {
+        var name = nameof(NotStatic_SameObject_Test) + no;
         var service = ServiceProvider.GetRequiredService<IService>();
-        var fromInstance = service.Get(no);
+        var fromInstance = service.Get(name);
 
-        var (_, tempItem, _, t) = Operation.Execute(() => service.Get(no));
+        var (_, tempItem, _, t) = Operation.Execute(() => service.Get(name));
         Assert.NotNull(tempItem);
         Assert.Equal(fromInstance.Id, tempItem.Id);
         Assert.True(t.TotalMilliseconds < CacheMaxMilliseconds, t.TotalSeconds.ToString());
@@ -106,14 +110,15 @@ public class ReturnValueCacheTests(ITestOutputHelper output)
     [MemberData(nameof(Numbers))]
     public void NotStatic_DiffObject_Test(int no)
     {
+        var name = nameof(NotStatic_DiffObject_Test) + no;
         var service = ServiceProvider.GetRequiredService<IService>();
-        var fromInstance = service.Get(no);
+        var fromInstance = service.Get(name);
 
         var tempService = ServiceProvider.GetRequiredService<IService>();
-        var (_, temp, _, t) = Operation.Execute(() => tempService.Get(no));
+        var (_, temp, _, t) = Operation.Execute(() => tempService.Get(name));
         Assert.NotNull(temp);
         Assert.NotEqual(fromInstance.Id, temp.Id);
-        Assert.Equal($"{tempService.Id}_{no}", temp.Id);
+        Assert.Equal($"{tempService.Id}_{name}", temp.Id);
         Assert.True(t.TotalMilliseconds > SleepMilliseconds, t.TotalSeconds.ToString());
     }
 }
