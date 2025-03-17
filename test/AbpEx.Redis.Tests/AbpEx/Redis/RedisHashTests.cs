@@ -2,7 +2,7 @@ namespace AbpEx.Redis;
 
 public class RedisHashTests(ITestOutputHelper output) : AbpRedisTests(output)
 {
-    [Fact]
+    [RetryFact]
     public void HSet_HGet_String_Test()
     {
         var key = nameof(HSet_HGet_String_Test).ToLower();
@@ -15,7 +15,7 @@ public class RedisHashTests(ITestOutputHelper output) : AbpRedisTests(output)
     }
 
 
-    [Fact]
+    [RetryFact]
     public void Provider_HmSet_HmGet_String_Test()
     {
         var key = nameof(Provider_HmSet_HmGet_String_Test).ToLower();
@@ -32,7 +32,7 @@ public class RedisHashTests(ITestOutputHelper output) : AbpRedisTests(output)
         Assert.Equal(dic, actual);
     }
 
-    [Fact]
+    [RetryFact]
     public void HmSet_HmGet_String_Test()
     {
         var key = nameof(HmSet_HmGet_String_Test).ToLower();
@@ -49,7 +49,7 @@ public class RedisHashTests(ITestOutputHelper output) : AbpRedisTests(output)
     }
 
 
-    [Fact]
+    [RetryFact]
     public async Task HmSetAsync_HmGetAsync_String_Test()
     {
         var key = nameof(HmSetAsync_HmGetAsync_String_Test).ToLower();

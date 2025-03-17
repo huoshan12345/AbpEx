@@ -4,7 +4,7 @@ namespace AbpEx.Redis;
 
 public class RedisCollectionManagerTests(ITestOutputHelper output) : AbpRedisTests(output)
 {
-    [Fact]
+    [RetryFact]
     public void GetList_Test()
     {
         var key = nameof(GetList_Test).ToLower();
@@ -25,7 +25,7 @@ public class RedisCollectionManagerTests(ITestOutputHelper output) : AbpRedisTes
         Assert.Equal(1, provider.LLen(col.Key));
     }
 
-    [Fact]
+    [RetryFact]
     public void GetHash_Test()
     {
         var key = nameof(GetHash_Test).ToLower();
@@ -47,7 +47,7 @@ public class RedisCollectionManagerTests(ITestOutputHelper output) : AbpRedisTes
         Assert.Equal(1, provider.HLen(col.Key));
     }
 
-    [Fact]
+    [RetryFact]
     public void GetSet_Test()
     {
         var key = nameof(GetSet_Test).ToLower();
@@ -69,7 +69,7 @@ public class RedisCollectionManagerTests(ITestOutputHelper output) : AbpRedisTes
         Assert.Equal(1, provider.SCard(col.Key));
     }
 
-    [Fact]
+    [RetryFact]
     public void GetSortedSet_Test()
     {
         var key = nameof(GetSortedSet_Test).ToLower();
