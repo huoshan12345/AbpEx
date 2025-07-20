@@ -9,7 +9,7 @@
     <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
-    <PackageReference Include="FclEx.Serilog" Version="1.7.8" />
+    <PackageReference Include="FclEx.Serilog" Version="1.7.9" />
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::VersionLessThan($(TargetFrameworkVersion), 8.0))">
