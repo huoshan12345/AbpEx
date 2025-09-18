@@ -26,17 +26,28 @@ public abstract class AbpTests<TModule> where TModule : AbpModule
             {
                 builder.SetMinimumLevel(LogLevel);
                 builder.AddXunitTest(_output, true);
-                builder.AddFilter("Volo.Abp.Modularity.ModuleManager", LogLevel.Warning);
-                builder.AddFilter("Volo.Abp.AbpApplicationBase", LogLevel.Warning);
             });
+
+        ValidateServices(services);
 
         var provider = UseAbpAsync
             ? SynchronizationContextScope.Run(services.UseAbpAsync)
             : services.UseAbp();
 
         var logger = provider.CreateLogger("AbpEx.Xunit");
-        logger.LogDebug("It takes {ElapsedSeconds} seconds to initialize abp framework", watch.GetElapsedTime().TotalSeconds);
+        logger.LogDebug("It takes {ElapsedSeconds:f3} seconds to initialize abp framework", watch.GetElapsedTime().TotalSeconds);
         return provider;
+    }
+
+    protected virtual void ValidateServices(IServiceCollection services)
+    {
+        var options = new ServiceProviderOptions
+        {
+            ValidateScopes = ValidateScopes,
+            ValidateOnBuild = ValidateOnBuild
+        };
+
+        services.BuildServiceProvider(options);
     }
 
     protected virtual void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
@@ -45,6 +56,8 @@ public abstract class AbpTests<TModule> where TModule : AbpModule
 
     protected virtual bool UseAbpAsync { get; } = true;
     protected virtual LogLevel LogLevel => LogLevel.Trace;
+    protected virtual bool ValidateOnBuild { get; } = true;
+    protected virtual bool ValidateScopes { get; } = true;
 
     protected virtual IConfigurationRoot BuildConfig()
     {

@@ -1,11 +1,7 @@
 namespace AbpEx.Caching;
 
-public class CacheTests : AbpTests<AbpTestModule>
+public class CacheTests(ITestOutputHelper output) : AbpTests<AbpTestModule>(output)
 {
-    public CacheTests(ITestOutputHelper output) : base(output)
-    {
-    }
-
     [Fact]
     public void TestCache()
     {

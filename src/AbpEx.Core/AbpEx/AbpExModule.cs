@@ -1,3 +1,8 @@
+using FclEx.DependencyInjection;
+using Volo.Abp.Internal.Telemetry;
+using Volo.Abp.Internal.Telemetry.Activity.Contracts;
+using Volo.Abp.Internal.Telemetry.Activity.Providers;
+
 namespace AbpEx;
 
 public class AbpExModule : AbpModule
@@ -10,6 +15,16 @@ public class AbpExModule : AbpModule
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
+        // to fix https://github.com/abpframework/abp/issues/23755
+        // and disable abp telemetry
+        context.Services
+            .Remove(m => m.ServiceType == typeof(ITelemetryActivityEventBuilder))
+            .Remove(m => m.ServiceType == typeof(TelemetryActivityEventBuilder))
+            .AddSingleton<ITelemetryActivityEventBuilder, NullTelemetryActivityEventBuilder>()
+            .Remove(m => m.ServiceType == typeof(ITelemetryService))
+            .Remove(m => m.ServiceType == typeof(TelemetryService))
+            .AddSingleton<ITelemetryService, NullTelemetryService>();
+
         context.Services
             .AddEasyCaching(o => o.UseInMemory().WithPatchedSystemTextJson())
             .AddSingleton<ICacheManager, CacheManager>()

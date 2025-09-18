@@ -1,13 +1,10 @@
 namespace AbpEx.Xunit;
 
-public abstract class AbpAopTests<TModule> : AbpTests<TModule>
+public abstract class AbpAopTests<TModule>(ITestOutputHelper output) : AbpTests<TModule>(output)
     where TModule : AbpModule
 {
     protected override LogLevel LogLevel => LogLevel.Debug;
-
-    protected AbpAopTests(ITestOutputHelper output) : base(output)
-    {
-    }
+    protected override bool ValidateScopes { get; } = false;
 
     protected override void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
     {
