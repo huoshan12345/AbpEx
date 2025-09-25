@@ -1,8 +1,6 @@
-﻿using EasyCaching.Core;
+﻿namespace EasyCaching.Core;
 
-namespace FclEx.Utils;
-
-public static class OperationResultExtensions
+public static class CacheValueExtensions
 {
     public static OperationResult<T> Unwrap<T>(this OperationResult<CacheValue<T>> result)
     {
@@ -24,8 +22,8 @@ public static class OperationResultExtensions
         }
     }
 
-    public static async Task<OperationResult<T>> Unwrap<T>(this Task<OperationResult<CacheValue<T>>> result)
+    public static Task<OperationResult<T>> Unwrap<T>(this Task<OperationResult<CacheValue<T>>> result)
     {
-        return (await result.IgnoreSyncContext()).Unwrap();
+        return result.Then(m => m.Unwrap());
     }
 }
