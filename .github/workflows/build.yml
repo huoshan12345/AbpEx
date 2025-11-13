@@ -31,23 +31,6 @@ jobs:
           - 6379:6379
         options: >-
           --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-      rabbitmq:
-        image: heidiks/rabbitmq-delayed-message-exchange:3.8.27-management
-        env:
-          RABBITMQ_DEFAULT_USER: rmq
-          RABBITMQ_DEFAULT_PASS: 111111
-        ports:
-          - 5672:5672
-        options: >-
-          --health-cmd "rabbitmqctl node_health_check" --health-interval 10s --health-timeout 5s --health-retries 5
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_PASSWORD: 111111
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Get PR
         if: ${{ github.event_name == 'pull_request_target' }}
@@ -71,6 +54,7 @@ jobs:
           dotnet-version: |
             8.0.x
             9.0.x
+            10.0.x
 
       - name: NuGet Restore
         run: dotnet restore ${{ env.SOLUTION }}
