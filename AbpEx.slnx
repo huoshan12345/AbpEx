@@ -15,9 +15,7 @@
     <File Path="NuGet.Config" />
     <File Path="README.md" />
   </Folder>
-  <Folder Name="/src/" />
-  <Folder Name="/src/AbpEx/" />
-  <Folder Name="/src/AbpEx/src/">
+  <Folder Name="/src/">
     <File Path="src/Directory.Build.props" />
     <File Path="src/Directory.Build.targets" />
     <Project Path="src/AbpEx.Core/AbpEx.Core.csproj" />
@@ -25,7 +23,7 @@
     <Project Path="src/AbpEx.Redis/AbpEx.Redis.csproj" />
     <Project Path="src/AbpEx.Xunit/AbpEx.Xunit.csproj" />
   </Folder>
-  <Folder Name="/src/AbpEx/test/">
+  <Folder Name="/test/">
     <File Path="test/Directory.Build.props" />
     <File Path="test/Directory.Build.targets" />
     <Project Path="test/AbpEx.Core.Tests/AbpEx.Core.Tests.csproj" />
