@@ -7,8 +7,8 @@
     <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
     <!-- ReSharper disable once VulnerablePackage -->
     <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
     <PackageReference Include="FclEx.Serilog" Version="1.9.2" />
   </ItemGroup>
 
