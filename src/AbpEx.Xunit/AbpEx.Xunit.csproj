@@ -1,16 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="FclEx.Xunit" Version="1.9.6" />
+    <PackageReference Include="FclEx.Xunit" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AbpEx.Core\AbpEx.Core.csproj" />
   </ItemGroup>
-
 </Project>

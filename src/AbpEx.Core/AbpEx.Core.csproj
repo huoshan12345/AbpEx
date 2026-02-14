@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
-    <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
-    <PackageReference Include="Volo.Abp.Core" Version="10.0.3" />
-    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
-    <PackageReference Include="FclEx.Serilog" Version="1.9.6" />
-    <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
+    <PackageReference Include="EasyCaching.InMemory" />
+    <PackageReference Include="EasyCaching.Serialization.SystemTextJson" />
+    <PackageReference Include="Volo.Abp.Core" />
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="FclEx.Serilog" />
+    <PackageReference Include="PolySharp" PrivateAssets="all" />
   </ItemGroup>
 </Project>
