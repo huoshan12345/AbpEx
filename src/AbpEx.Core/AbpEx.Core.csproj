@@ -1,20 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <!-- ReSharper disable once VulnerablePackage -->
-    <PackageReference Include="Volo.Abp.Core" Version="10.0.2" />
-    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
     <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
-    <!-- ReSharper disable once VulnerablePackage -->
     <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
-    <PackageReference Include="FclEx.Serilog" Version="1.9.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$([MSBuild]::VersionLessThan($(TargetFrameworkVersion), 8.0))">
-    <!--net6.0 and net7.0 require this package to support CollectionBuilder-->
+    <PackageReference Include="Volo.Abp.Core" Version="10.0.3" />
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+    <PackageReference Include="FclEx.Serilog" Version="1.9.6" />
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
   </ItemGroup>
-
 </Project>
