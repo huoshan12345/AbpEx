@@ -18,14 +18,17 @@
   <Folder Name="/src/">
     <File Path="src/Directory.Build.props" />
     <File Path="src/Directory.Build.targets" />
+    <File Path="src/Directory.Packages.props" />
     <Project Path="src/AbpEx.Core/AbpEx.Core.csproj" />
     <Project Path="src/AbpEx.LightInject/AbpEx.LightInject.csproj" />
     <Project Path="src/AbpEx.Redis/AbpEx.Redis.csproj" />
+    <Project Path="src/AbpEx.Xunit.v3/AbpEx.Xunit.v3.csproj" />
     <Project Path="src/AbpEx.Xunit/AbpEx.Xunit.csproj" />
   </Folder>
   <Folder Name="/test/">
     <File Path="test/Directory.Build.props" />
     <File Path="test/Directory.Build.targets" />
+    <File Path="test/Directory.Packages.props" />
     <Project Path="test/AbpEx.Core.Tests/AbpEx.Core.Tests.csproj" />
     <Project Path="test/AbpEx.LightInject.Tests/AbpEx.LightInject.Tests.csproj" />
     <Project Path="test/AbpEx.Redis.Tests/AbpEx.Redis.Tests.csproj" />

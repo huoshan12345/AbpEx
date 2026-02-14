@@ -1,12 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\AbpEx.LightInject\AbpEx.LightInject.csproj" />
     <ProjectReference Include="..\AbpEx.Core.Tests\AbpEx.Core.Tests.csproj" />
   </ItemGroup>
-
 </Project>

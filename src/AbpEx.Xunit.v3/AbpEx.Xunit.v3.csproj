@@ -2,11 +2,15 @@
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <IsTestProject>false</IsTestProject>
+    <DefineConstants>$(DefineConstants);ABPEX_XUNIT_V3</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FclEx.Xunit" />
+    <PackageReference Include="FclEx.Xunit.v3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AbpEx.Core\AbpEx.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AbpEx.Xunit\**\*.cs" Exclude="..\AbpEx.Xunit\obj\**\*;..\AbpEx.Xunit\bin\**\*" />
   </ItemGroup>
 </Project>

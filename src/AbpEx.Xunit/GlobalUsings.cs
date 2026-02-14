@@ -12,4 +12,9 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using Volo.Abp;
 global using Volo.Abp.Modularity;
+global using Xunit;
+#if ABPEX_XUNIT_V3
+global using Xunit.v3;
+#else
 global using Xunit.Abstractions;
+#endif

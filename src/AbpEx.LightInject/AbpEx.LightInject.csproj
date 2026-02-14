@@ -1,12 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="LightInject" Version="7.0.1" />
-    <PackageReference Include="AspectCore.Extensions.LightInject" Version="2.4.0" />
+    <PackageReference Include="LightInject" />
+    <PackageReference Include="AspectCore.Extensions.LightInject" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AbpEx.Core\AbpEx.Core.csproj" />
   </ItemGroup>
-
 </Project>

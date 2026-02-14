@@ -1,9 +1,15 @@
+using System.Threading;
+
 namespace AbpEx.Xunit;
 
 public abstract class AbpTests<TModule> where TModule : AbpModule
 {
     private readonly Lazy<IServiceProvider> _lazy;
     protected readonly ITestOutputHelper _output;
+
+#if ABPEX_XUNIT_V3
+    protected CancellationToken CancellationToken => TestContext.Current.CancellationToken;
+#endif
 
     protected AbpTests(ITestOutputHelper output)
     {
