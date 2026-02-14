@@ -13,6 +13,5 @@ global using FclEx.Utils;
 global using FclEx.Xunit;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
-global using xRetry;
+global using xRetry.v3;
 global using Xunit;
-global using Xunit.Abstractions;

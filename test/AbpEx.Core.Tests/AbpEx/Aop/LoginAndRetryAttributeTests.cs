@@ -33,7 +33,7 @@ public class LoginAndRetryAttributeTests(ITestOutputHelper output) : AbpAopTests
         var account = new UserAccount("user", "password");
         var factory = ServiceProvider.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
         var client = factory.Create(account);
-        var result = await client.LoginAsync();
+        var result = await client.LoginAsync(CancellationToken);
         Assert.True(result.Success);
     }
 
@@ -47,12 +47,8 @@ public class LoginAndRetryAttributeTests(ITestOutputHelper output) : AbpAopTests
         Assert.True(client.IsOnline);
     }
 
-    public class LoginAndRetryClient : UserClient
+    public class LoginAndRetryClient(ILoggerFactory loggerFactory) : UserClient(loggerFactory: loggerFactory)
     {
-        public LoginAndRetryClient(ILoggerFactory loggerFactory) : base(loggerFactory: loggerFactory)
-        {
-        }
-
         [LoginAndRetry]
         public virtual Task<OperationResult> DoAsync()
         {

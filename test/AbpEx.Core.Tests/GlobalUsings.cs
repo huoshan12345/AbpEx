@@ -15,4 +15,4 @@ global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Logging.Abstractions;
 global using Volo.Abp;
 global using Xunit;
-global using Xunit.Abstractions;
+global using xRetry.v3;

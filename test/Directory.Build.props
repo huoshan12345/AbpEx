@@ -17,9 +17,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="Xunit.TestFramework" Condition="$(ProjectName) != 'AbpEx.Core.Tests'">
-      <_Parameter1>Meziantou.Xunit.ParallelTestFramework</_Parameter1>
-      <_Parameter2>Meziantou.Xunit.ParallelTestFramework</_Parameter2>
+    <AssemblyAttribute Include="Xunit.TestFramework" Condition="$(MSBuildProjectName) != 'AbpEx.Core.Tests'">
+      <_Parameter1>Meziantou.Xunit.v3.ParallelTestFramework</_Parameter1>
+      <_Parameter1_TypeName>System.Type</_Parameter1_TypeName>
     </AssemblyAttribute>
   </ItemGroup>
 
