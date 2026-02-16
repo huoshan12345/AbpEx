@@ -1,6 +1,6 @@
 namespace AbpEx.Caching;
 
-public class CacheManagerExtensionsTests(ITestOutputHelper output) : AbpTests<AbpTestModule>(output)
+public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
 {
     [Fact]
     public async Task GetObjectAsync_Raw_Test()

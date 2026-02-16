@@ -13,10 +13,6 @@ public class OpenGenericConventionalRegistrarTests : AbpTests<AbpTestModule>
     public interface INonGenericTransient : ITransientDependency;
     public class NonGenericTransient<T> : INonGenericTransient;
 
-    public OpenGenericConventionalRegistrarTests(ITestOutputHelper output) : base(output)
-    {
-    }
-
     [Fact]
     public void GenericSingleton_Test()
     {

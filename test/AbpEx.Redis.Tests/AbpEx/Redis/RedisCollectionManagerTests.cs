@@ -2,7 +2,7 @@ using StackExchange.Redis;
 
 namespace AbpEx.Redis;
 
-public class RedisCollectionManagerTests(ITestOutputHelper output) : AbpRedisTests(output)
+public class RedisCollectionManagerTests : AbpRedisTests
 {
     [RetryFact]
     public void GetList_Test()

@@ -13,7 +13,7 @@ public class AbpRedisTests : AbpAopTests<AbpRedisTestModule>
 
     private readonly Action<IServiceCollection>? _action;
 
-    protected AbpRedisTests(ITestOutputHelper output, Action<IServiceCollection>? action = null) : base(output)
+    protected AbpRedisTests(Action<IServiceCollection>? action = null)
     {
         _action = action;
         _abpRedisOptions = new Lazy<AbpRedisOptions>(() => ServiceProvider.GetOptions<AbpRedisOptions>(), true);

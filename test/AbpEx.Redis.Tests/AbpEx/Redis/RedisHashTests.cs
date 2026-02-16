@@ -1,6 +1,6 @@
 namespace AbpEx.Redis;
 
-public class RedisHashTests(ITestOutputHelper output) : AbpRedisTests(output)
+public class RedisHashTests : AbpRedisTests
 {
     [RetryFact]
     public void HSet_HGet_String_Test()

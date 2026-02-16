@@ -1,6 +1,6 @@
 namespace AbpEx.Redis;
 
-public class RedisCacheTests(ITestOutputHelper output) : AbpRedisTests(output)
+public class RedisCacheTests : AbpRedisTests
 {
     public record Model(int Id, string? Name, int Age, int? CoinCount = null);
 

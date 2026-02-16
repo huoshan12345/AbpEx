@@ -1,23 +1,29 @@
-using System.Threading;
-
 namespace AbpEx.Xunit;
 
 public abstract class AbpTests<TModule> where TModule : AbpModule
 {
     private readonly Lazy<IServiceProvider> _lazy;
-    protected readonly ITestOutputHelper _output;
 
 #if ABPEX_XUNIT_V3
-    protected CancellationToken CancellationToken => TestContext.Current.CancellationToken;
-#endif
+    protected System.Threading.CancellationToken CancellationToken => TestContext.Current.CancellationToken;
+    protected ITestOutputHelper? Output => TestContext.Current.TestOutputHelper;
+
+    protected AbpTests()
+    {
+        _lazy = new(Initialize);
+    }
+#else
+    protected readonly ITestOutputHelper _output;
 
     protected AbpTests(ITestOutputHelper output)
     {
         _output = output;
         _lazy = new(Initialize);
     }
+#endif
 
     public IServiceProvider ServiceProvider => _lazy.Value;
+    public ILogger Logger => ServiceProvider.CreateLogger(GetType());
 
     protected IServiceProvider Initialize()
     {
@@ -31,7 +37,11 @@ public abstract class AbpTests<TModule> where TModule : AbpModule
             .AddLogging(builder =>
             {
                 builder.SetMinimumLevel(LogLevel);
-                builder.AddXunitTest(_output, true);
+#if ABPEX_XUNIT_V3
+                builder.AddXunit();
+#else
+                builder.AddXunit(_output, true);
+#endif
             });
 
         ValidateServices(services);
@@ -40,7 +50,7 @@ public abstract class AbpTests<TModule> where TModule : AbpModule
             ? SynchronizationContextScope.Run(services.UseAbpAsync)
             : services.UseAbp();
 
-        var logger = provider.CreateLogger("AbpEx.Xunit");
+        var logger = provider.CreateLogger(GetType());
         logger.LogDebug("It takes {ElapsedSeconds:f3} seconds to initialize abp framework", watch.GetElapsedTime().TotalSeconds);
         return provider;
     }

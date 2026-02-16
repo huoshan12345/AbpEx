@@ -2,7 +2,7 @@ using AbpEx;
 
 namespace Volo.Abp.DependencyInjection;
 
-public class GenericInterfaceConventionalRegistrarTests(ITestOutputHelper output) : AbpTests<AbpTestModule>(output)
+public class GenericInterfaceConventionalRegistrarTests : AbpTests<AbpTestModule>
 {
     public interface IGenericSingleton<out T> : ISingletonDependency;
     public class GenericSingleton : IGenericSingleton<string>;

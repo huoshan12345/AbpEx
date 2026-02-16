@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using AbpEx.Redis;
 using AspectCore.DynamicProxy;
 
@@ -6,8 +5,8 @@ using AspectCore.DynamicProxy;
 
 namespace AbpEx.Aop;
 
-public class ReturnValueCacheTests(ITestOutputHelper output)
-    : AbpRedisTests(output, o => o.AddTransient<IService, Service>())
+public class ReturnValueCacheTests()
+    : AbpRedisTests(o => o.AddTransient<IService, Service>())
 {
     public const int CacheMaxMilliseconds = 100;
     public const int SleepMilliseconds = 200;

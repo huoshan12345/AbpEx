@@ -1,6 +1,6 @@
 namespace AbpEx.Redis;
 
-public class AbpRedisUnreachableTests(ITestOutputHelper output) : AbpTests<AbpRedisTestModule>(output)
+public class AbpRedisUnreachableTests : AbpTests<AbpRedisTestModule>
 {
     protected override IConfigurationRoot BuildConfig()
     {

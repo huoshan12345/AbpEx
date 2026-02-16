@@ -1,6 +1,6 @@
 namespace AbpEx.Redis;
 
-public class TimeoutTests(ITestOutputHelper output) : AbpRedisUnreachableTests(output)
+public class TimeoutTests : AbpRedisUnreachableTests
 {
     public static FieldInfo FieldOfRedisOptions { get; } = typeof(DefaultRedisCachingProvider).GetRequiredField("_options");
 

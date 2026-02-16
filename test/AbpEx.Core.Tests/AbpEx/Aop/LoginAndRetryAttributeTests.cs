@@ -1,6 +1,6 @@
 namespace AbpEx.Aop;
 
-public class LoginAndRetryAttributeTests(ITestOutputHelper output) : AbpAopTests<AbpTestModule>(output)
+public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
 {
     protected override void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
     {

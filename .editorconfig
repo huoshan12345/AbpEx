@@ -44,3 +44,12 @@ dotnet_diagnostic.IDE0022.severity = none
 
 # IDE0051: Remove unused private members
 dotnet_diagnostic.IDE0051.severity = none
+
+# IDE0305: Simplify collection initialization
+dotnet_diagnostic.IDE0305.severity = silent
+
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = silent
+
+# CA1848: Use the LoggerMessage delegates
+dotnet_diagnostic.CA1848.severity = none

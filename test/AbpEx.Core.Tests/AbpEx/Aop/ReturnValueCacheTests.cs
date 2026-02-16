@@ -1,15 +1,13 @@
-using Meziantou.Xunit;
-using xRetry;
-
 namespace AbpEx.Aop;
 
-public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTestModule>(output)
+public class ReturnValueCacheTests : AbpAopTests<AbpTestModule>
 {
     public static readonly TimeSpan CacheMaxTime = TimeSpan.FromMilliseconds(50);
     public static readonly TimeSpan SleepTime = TimeSpan.FromMilliseconds(100);
 
     public static IEnumerable<object[]> Numbers { get; } = new[] { -1, 0, 1, 10 }
-        .Select(m => new object[] { m }).ToArray();
+        .Select(m => new object[] { m })
+        .ToArray();
 
     protected override void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
     {
@@ -17,10 +15,9 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
         options.Services.AddTransient<IService, Service>();
     }
 
-    public class Model
+    public class Model(string id)
     {
-        public string Id { get; }
-        public Model(string id) { Id = id; }
+        public string Id { get; } = id;
     }
 
     public interface IService
@@ -103,7 +100,7 @@ public class ReturnValueCacheTests(ITestOutputHelper output) : AbpAopTests<AbpTe
     public void Error_Test()
     {
         Interlocked.Increment(ref _errorCount);
-        _output.WriteLine("Current error count: " + _errorCount);
+        Logger.LogInformation("Current error count: {ErrorCount}", _errorCount);
 
         Assert.True(_errorCount >= 3); // Retry 3 times
     }
