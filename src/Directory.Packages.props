@@ -8,9 +8,9 @@
     <PackageVersion Include="EasyCaching.InMemory" Version="1.9.2" />
     <PackageVersion Include="EasyCaching.Redis" Version="1.9.2" />
     <PackageVersion Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
-    <PackageVersion Include="FclEx.Serilog" Version="1.9.8" />
-    <PackageVersion Include="FclEx.Xunit" Version="1.9.8" />
-    <PackageVersion Include="FclEx.Xunit.v3" Version="1.9.8" />
+    <PackageVersion Include="FclEx.Serilog" Version="1.9.9" />
+    <PackageVersion Include="FclEx.Xunit" Version="1.9.9" />
+    <PackageVersion Include="FclEx.Xunit.v3" Version="1.9.9" />
     <PackageVersion Include="LightInject" Version="7.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
