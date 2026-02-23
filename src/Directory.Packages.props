@@ -16,6 +16,6 @@
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
     <PackageVersion Include="PolySharp" Version="1.15.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.11.3" />
-    <PackageVersion Include="Volo.Abp.Core" Version="10.0.3" />
+    <PackageVersion Include="Volo.Abp.Core" Version="10.1.0" />
   </ItemGroup>
 </Project>
