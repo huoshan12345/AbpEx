@@ -13,8 +13,7 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
         var account = new UserAccount("test", "test");
         var factory = ServiceProvider.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
         var client = factory.Create(account);
-        Assert.IsNotType<LoginAndRetryClient>(client);
-        Assert.IsAssignableFrom<LoginAndRetryClient>(client);
+        Assert.IsType<LoginAndRetryClient>(client, false);
         return client;
     }
 
@@ -34,7 +33,7 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
         var factory = ServiceProvider.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
         var client = factory.Create(account);
         var result = await client.LoginAsync(CancellationToken);
-        Assert.True(result.Success);
+        Assert.True(result.IsSuccess);
     }
 
     [Fact]
@@ -43,7 +42,7 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
         var client = CreateClient();
         Assert.False(client.IsOnline);
         var r = await client.DoAsync();
-        Assert.True(r.Success);
+        Assert.True(r.IsSuccess);
         Assert.True(client.IsOnline);
     }
 

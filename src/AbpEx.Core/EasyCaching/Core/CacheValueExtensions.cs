@@ -4,7 +4,7 @@ public static class CacheValueExtensions
 {
     public static OperationResult<T> Unwrap<T>(this OperationResult<CacheValue<T>> result)
     {
-        if (result.Success)
+        if (result.IsSuccess)
         {
             var value = result.Value;
             if (value.HasValue)

@@ -16,6 +16,6 @@ public static class CacheExtensions
     public static bool TrySet<T>(this ICache<T> cache, string key, T item, TimeSpan? expiration = null)
     {
         var result = Operation.Execute(() => cache.Set(key, item, expiration));
-        return result.Success;
+        return result.IsSuccess;
     }
 }

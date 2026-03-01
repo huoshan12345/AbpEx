@@ -7,7 +7,7 @@ namespace AbpEx.Aop;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 public class LoginAndRetryAttribute : AbstractInterceptorAttribute
 {
-    public virtual Func<object, bool> NeedRetry { get; } = o => o is IOperationResult { Error: true };
+    public virtual Func<object?, bool> NeedRetry { get; } = o => o is IOperationResult { IsError: true };
 
     public override async Task Invoke(AspectContext context, AspectDelegate next)
     {
@@ -16,7 +16,7 @@ public class LoginAndRetryAttribute : AbstractInterceptorAttribute
         if (context.Implementation is UserClient client)
         {
             var result = context.IsAsync()
-                ? (object)(await (dynamic)context.ReturnValue)
+                ? (object?)await (dynamic)context.ReturnValue
                 : context.ReturnValue;
 
             if (client.IsOnline) return;

@@ -72,29 +72,29 @@ internal sealed class Cache<T> : ICache<T>
 
     public void Remove(string cacheKey) => _provider.Remove(GetKey(cacheKey));
 
-    public Task RemoveAsync(string cacheKey) => _provider.RemoveAsync(GetKey(cacheKey));
+    public Task RemoveAsync(string cacheKey, CancellationToken cancellationToken = default) => _provider.RemoveAsync(GetKey(cacheKey), cancellationToken);
 
     public bool Exists(string cacheKey) => _provider.Exists(GetKey(cacheKey));
 
-    public Task<bool> ExistsAsync(string cacheKey) => _provider.ExistsAsync(GetKey(cacheKey));
+    public Task<bool> ExistsAsync(string cacheKey, CancellationToken cancellationToken = default) => _provider.ExistsAsync(GetKey(cacheKey), cancellationToken);
 
     public void RemoveAll(IEnumerable<string> cacheKeys)
         => _provider.RemoveAll(cacheKeys.Select(GetKey));
 
-    public Task RemoveAllAsync(IEnumerable<string> cacheKeys)
-        => _provider.RemoveAllAsync(cacheKeys.Select(GetKey));
+    public Task RemoveAllAsync(IEnumerable<string> cacheKeys, CancellationToken cancellationToken = default)
+        => _provider.RemoveAllAsync(cacheKeys.Select(GetKey), cancellationToken);
 
     public int GetCount() => _provider.GetCount(Prefix);
 
     public void RemoveAll() => _provider.RemoveByPrefix(Prefix);
 
-    public Task RemoveAllAsync() => _provider.RemoveByPrefixAsync(Prefix);
+    public Task RemoveAllAsync(CancellationToken cancellationToken = default) => _provider.RemoveByPrefixAsync(Prefix, cancellationToken);
 
     public void Set(string cacheKey, T cacheValue, TimeSpan? expiration = null)
         => _provider.Set(GetKey(cacheKey), cacheValue, expiration ?? DefaultExpiration);
 
-    public Task SetAsync(string cacheKey, T cacheValue, TimeSpan? expiration = null)
-        => _provider.SetAsync(GetKey(cacheKey), cacheValue, expiration ?? DefaultExpiration);
+    public Task SetAsync(string cacheKey, T cacheValue, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+        => _provider.SetAsync(GetKey(cacheKey), cacheValue, expiration ?? DefaultExpiration, cancellationToken);
 
     public CacheValue<T> Get(string cacheKey, Func<string, T> dataRetriever, TimeSpan? expiration = null)
     {
@@ -102,23 +102,23 @@ internal sealed class Cache<T> : ICache<T>
         return _provider.Get(key, () => dataRetriever(key), expiration ?? DefaultExpiration);
     }
 
-    public Task<CacheValue<T>> GetAsync(string cacheKey, Func<string, Task<T>> dataRetriever, TimeSpan? expiration = null)
+    public Task<CacheValue<T>> GetAsync(string cacheKey, Func<string, Task<T>> dataRetriever, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
     {
         var key = GetKey(cacheKey);
-        return _provider.GetAsync(key, () => dataRetriever(key), expiration ?? DefaultExpiration);
+        return _provider.GetAsync(key, () => dataRetriever(key), expiration ?? DefaultExpiration, cancellationToken);
     }
 
     public CacheValue<T> Get(string cacheKey)
         => _provider.Get<T>(GetKey(cacheKey));
 
-    public Task<CacheValue<T>> GetAsync(string cacheKey)
-        => _provider.GetAsync<T>(GetKey(cacheKey));
+    public Task<CacheValue<T>> GetAsync(string cacheKey, CancellationToken cancellationToken = default)
+        => _provider.GetAsync<T>(GetKey(cacheKey), cancellationToken);
 
     public void SetAll(IDictionary<string, T> value, TimeSpan? expiration = null)
         => _provider.SetAll<T>(value.ToDictionary(m => GetKey(m.Key), m => m.Value), expiration ?? DefaultExpiration);
 
-    public Task SetAllAsync(IDictionary<string, T> value, TimeSpan? expiration = null)
-        => _provider.SetAllAsync<T>(value.ToDictionary(m => GetKey(m.Key), m => m.Value), expiration ?? DefaultExpiration);
+    public Task SetAllAsync(IDictionary<string, T> value, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+        => _provider.SetAllAsync<T>(value.ToDictionary(m => GetKey(m.Key), m => m.Value), expiration ?? DefaultExpiration, cancellationToken);
 
     public IDictionary<string, CacheValue<T>> GetAll(IEnumerable<string> cacheKeys)
     {
@@ -126,9 +126,9 @@ internal sealed class Cache<T> : ICache<T>
         return dic.ToDictionary(m => TrimKeyPrefix(m.Key), m => m.Value);
     }
 
-    public async Task<IDictionary<string, CacheValue<T>>> GetAllAsync(IEnumerable<string> cacheKeys)
+    public async Task<IDictionary<string, CacheValue<T>>> GetAllAsync(IEnumerable<string> cacheKeys, CancellationToken cancellationToken = default)
     {
-        var dic = await _provider.GetAllAsync<T>(cacheKeys.Select(GetKey));
+        var dic = await _provider.GetAllAsync<T>(cacheKeys.Select(GetKey), cancellationToken);
         return dic.ToDictionary(m => TrimKeyPrefix(m.Key), m => m.Value);
     }
 }
