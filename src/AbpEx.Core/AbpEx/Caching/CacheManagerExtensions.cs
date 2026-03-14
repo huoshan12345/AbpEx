@@ -11,7 +11,7 @@ public static class CacheManagerExtensions
         {
             var cache = cacheManager.GetCache<T>(cacheName);
             return cache.TryGet(cacheKey, out var obj)
-                ? Operation.Success(obj).ToTask()
+                ? Operation.Success(obj)
                 : rawGetter().OnValue((o, t) => cache.TrySet(cacheKey, o, expiration));
         });
     }

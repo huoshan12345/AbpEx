@@ -62,8 +62,8 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
         const string cacheName = nameof(GetObjectAsync_OperationResult_Fail);
         const string cacheKey = "key";
-        var (successful, _, ex, _) = await cacheManager.GetObjectAsync<string>(() => Operation.Error<string>(new InvalidOperationException()).ToTask(),
-            cacheKey, cacheName, TimeSpan.FromSeconds(10));
+        var (successful, _, ex, _) = await cacheManager.GetObjectAsync<string>(()
+            => Operation.Error<string>(new InvalidOperationException()), cacheKey, cacheName, TimeSpan.FromSeconds(10));
 
         Assert.False(successful);
         Assert.IsType<InvalidOperationException>(ex);
@@ -132,8 +132,8 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
         var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
         const string cacheName = nameof(SetObjectAsync_OperationResult_Fail);
         const string cacheKey = "key";
-        var (successful, _, ex, _) = await cacheManager.SetObjectAsync<string>(() => Operation.Error<string>(new InvalidOperationException()).ToTask(),
-            cacheKey, cacheName, TimeSpan.FromSeconds(10));
+        var (successful, _, ex, _) = await cacheManager.SetObjectAsync<string>(()
+            => Operation.Error<string>(new InvalidOperationException()), cacheKey, cacheName, TimeSpan.FromSeconds(10));
 
         Assert.False(successful);
         Assert.IsType<InvalidOperationException>(ex);

@@ -51,15 +51,14 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
         [LoginAndRetry]
         public virtual Task<OperationResult> DoAsync()
         {
-            return (IsOnline
-                    ? Operation.Success()
-                    : Operation.Error(""))
-                .ToTask();
+            return IsOnline
+                ? Operation.Success()
+                : Operation.Error("");
         }
 
         protected override Task<OperationResult> LoginActionAsync(CancellationToken token)
         {
-            return Operation.Success().ToTask();
+            return Operation.Success();
         }
     }
 }

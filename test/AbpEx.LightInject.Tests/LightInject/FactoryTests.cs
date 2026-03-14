@@ -14,6 +14,7 @@ public class FactoryTests
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             DisposedCount++;
         }
     }
@@ -37,7 +38,7 @@ public class FactoryTests
         var obj = provider.GetRequiredService<Tester>();
         Assert.Equal(1, Tester.InstanceCount);
         Assert.Equal(0, obj.DisposedCount);
-        provider.ToDisposable().Dispose();
+        Disposable.FromValue(provider).Dispose();
         Assert.Equal(1, obj.DisposedCount);
     }
 }
