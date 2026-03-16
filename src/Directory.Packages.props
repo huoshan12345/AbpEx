@@ -13,6 +13,7 @@
     <PackageVersion Include="FclEx.Xunit.v3" Version="2.0.3" />
     <PackageVersion Include="LightInject" Version="7.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.5" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
     <PackageVersion Include="PolySharp" Version="1.15.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.12.1" />
