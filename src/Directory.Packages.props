@@ -14,6 +14,7 @@
     <PackageVersion Include="LightInject" Version="7.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.5" />
     <PackageVersion Include="PolySharp" Version="1.15.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.12.1" />
     <PackageVersion Include="Volo.Abp.Core" Version="10.1.1" />

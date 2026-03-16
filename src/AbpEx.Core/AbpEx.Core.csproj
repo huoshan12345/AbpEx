@@ -2,6 +2,7 @@
   <ItemGroup>
     <PackageReference Include="EasyCaching.InMemory" />
     <PackageReference Include="EasyCaching.Serialization.SystemTextJson" />
+  <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Volo.Abp.Core" />
     <PackageReference Include="AspectCore.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
