@@ -18,7 +18,7 @@ public static class CacheValueExtensions
         }
         else
         {
-            return result.CastTo<T>();
+            return result.Cast<T>();
         }
     }
 

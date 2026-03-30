@@ -1,12 +1,12 @@
 namespace AbpEx.Redis;
 
-public class RedisHashTests : AbpRedisTests
+public class RedisHashTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixture)
 {
     [RetryFact]
     public void HSet_HGet_String_Test()
     {
         var key = nameof(HSet_HGet_String_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
 
         col.HSet("1", "11");
@@ -19,10 +19,10 @@ public class RedisHashTests : AbpRedisTests
     public void Provider_HmSet_HmGet_String_Test()
     {
         var key = nameof(Provider_HmSet_HmGet_String_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
         var colKey = col.Key;
-        var provider = ServiceProvider.GetRequiredService<IRedisCachingProvider>();
+        var provider = Services.GetRequiredService<IRedisCachingProvider>();
         var dic = Enumerable.Range(1, 10)
             .Select(m => m.ToString())
             .ToDictionary(m => m, m => m + m);
@@ -36,7 +36,7 @@ public class RedisHashTests : AbpRedisTests
     public void HmSet_HmGet_String_Test()
     {
         var key = nameof(HmSet_HmGet_String_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
 
         var dic = Enumerable.Range(1, 10)
@@ -53,7 +53,7 @@ public class RedisHashTests : AbpRedisTests
     public async Task HmSetAsync_HmGetAsync_String_Test()
     {
         var key = nameof(HmSetAsync_HmGetAsync_String_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
 
         var dic = Enumerable.Range(1, 10)

@@ -3,7 +3,12 @@ using Volo.Abp;
 
 namespace AbpEx.Redis;
 
-public class AbpRedisTests : AbpAopTests<AbpRedisTestModule>
+[CollectionDefinition(nameof(AbpRedisTestsCollection))]
+public class AbpRedisTestsCollection : ICollectionFixture<AbpRedisTestsFixture>;
+
+[EnableParallelization]
+[Collection(nameof(AbpRedisTestsCollection))]
+public class AbpRedisTests : AbpTests<AbpRedisTestsFixture, AbpRedisTestsModule>
 {
     private readonly Lazy<AbpRedisOptions> _abpRedisOptions;
     public AbpRedisOptions AbpRedisOptions => _abpRedisOptions.Value;
@@ -11,23 +16,9 @@ public class AbpRedisTests : AbpAopTests<AbpRedisTestModule>
     private readonly Lazy<AbpCacheOptions> _abpCacheOptions;
     public AbpCacheOptions ReadOnlyCacheOptions => _abpCacheOptions.Value;
 
-    private readonly Action<IServiceCollection>? _action;
-
-    protected AbpRedisTests(Action<IServiceCollection>? action = null)
+    protected AbpRedisTests(AbpRedisTestsFixture fixture) : base(fixture)
     {
-        _action = action;
-        _abpRedisOptions = new Lazy<AbpRedisOptions>(() => ServiceProvider.GetOptions<AbpRedisOptions>(), true);
-        _abpCacheOptions = new Lazy<AbpCacheOptions>(() => ServiceProvider.GetOptions<AbpCacheOptions>(), true);
-    }
-
-    protected override IConfigurationRoot BuildConfig()
-    {
-        return GlobalConstants.Config;
-    }
-
-    protected override void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
-    {
-        base.Configure(options, configuration);
-        _action?.Invoke(options.Services);
+        _abpRedisOptions = new Lazy<AbpRedisOptions>(() => Services.GetOptions<AbpRedisOptions>(), true);
+        _abpCacheOptions = new Lazy<AbpCacheOptions>(() => Services.GetOptions<AbpCacheOptions>(), true);
     }
 }

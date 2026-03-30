@@ -1,12 +1,11 @@
 namespace AbpEx.Redis;
 
-public class AbpRedisUnreachableTests : AbpTests<AbpRedisTestModule>
+[CollectionDefinition(nameof(AbpRedisUnreachableTestsCollection))]
+public class AbpRedisUnreachableTestsCollection : ICollectionFixture<AbpRedisUnreachableTestsFixture>;
+
+[EnableParallelization]
+[Collection(nameof(AbpRedisUnreachableTestsCollection))]
+public class AbpRedisUnreachableTests(AbpRedisUnreachableTestsFixture fixture)
+    : AbpTests<AbpRedisUnreachableTestsFixture, AbpRedisTestsModule>(fixture)
 {
-    protected override IConfigurationRoot BuildConfig()
-    {
-        return new ConfigurationBuilder()
-            .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.Unreachable.json", false, false)
-            .Build();
-    }
 }

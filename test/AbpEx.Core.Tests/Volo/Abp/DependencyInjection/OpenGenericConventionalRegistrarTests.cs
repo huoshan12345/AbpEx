@@ -2,7 +2,7 @@ using AbpEx;
 
 namespace Volo.Abp.DependencyInjection;
 
-public class OpenGenericConventionalRegistrarTests : AbpTests<AbpTestModule>
+public class OpenGenericConventionalRegistrarTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
 {
     public interface IGenericSingleton<out T> : ISingletonDependency;
     public class GenericSingleton<T> : IGenericSingleton<T>;
@@ -21,9 +21,9 @@ public class OpenGenericConventionalRegistrarTests : AbpTests<AbpTestModule>
 
         void Test<T>()
         {
-            var obj = ServiceProvider.GetRequiredService<IGenericSingleton<T>>();
-            var obj2 = ServiceProvider.GetRequiredService<IGenericSingleton<T>>();
-            var obj3 = ServiceProvider.GetRequiredService<GenericSingleton<T>>();
+            var obj = Services.GetRequiredService<IGenericSingleton<T>>();
+            var obj2 = Services.GetRequiredService<IGenericSingleton<T>>();
+            var obj3 = Services.GetRequiredService<GenericSingleton<T>>();
             Assert.Equal(obj, obj2);
             Assert.NotEqual(obj, obj3); // they are not equal because an open generic type cannot be redirected to implementation type.
         }
@@ -37,9 +37,9 @@ public class OpenGenericConventionalRegistrarTests : AbpTests<AbpTestModule>
 
         void Test<T>()
         {
-            var obj = ServiceProvider.GetRequiredService<IGenericTransient<T>>();
-            var obj2 = ServiceProvider.GetRequiredService<IGenericTransient<T>>();
-            var obj3 = ServiceProvider.GetRequiredService<GenericTransient<T>>();
+            var obj = Services.GetRequiredService<IGenericTransient<T>>();
+            var obj2 = Services.GetRequiredService<IGenericTransient<T>>();
+            var obj3 = Services.GetRequiredService<GenericTransient<T>>();
             Assert.NotEqual(obj, obj2);
             Assert.NotEqual(obj, obj3);
             Assert.NotEqual(obj2, obj3);
@@ -49,10 +49,10 @@ public class OpenGenericConventionalRegistrarTests : AbpTests<AbpTestModule>
     [Fact]
     public void NonGenericTransient_Test()
     {
-        var obj = ServiceProvider.GetService<INonGenericTransient>();
+        var obj = Services.GetService<INonGenericTransient>();
         Assert.Null(obj);
 
-        var obj2 = ServiceProvider.GetService<NonGenericTransient<int>>();
+        var obj2 = Services.GetService<NonGenericTransient<int>>();
         Assert.NotNull(obj2);
     }
 }

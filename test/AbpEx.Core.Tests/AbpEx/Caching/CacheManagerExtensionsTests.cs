@@ -1,11 +1,11 @@
 namespace AbpEx.Caching;
 
-public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
+public class CacheManagerExtensionsTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
 {
     [Fact]
     public async Task GetObjectAsync_Raw_Test()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string expectedValue = "value";
         const string cacheName = nameof(GetObjectAsync_Raw_Test);
         const string cacheKey = "key";
@@ -24,7 +24,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task GetObjectAsync_Raw_Fail()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string cacheName = nameof(GetObjectAsync_Raw_Fail);
         const string cacheKey = "key";
         var (successful, _, ex, _) = await cacheManager.GetObjectAsync<string>(() => throw new InvalidOperationException(),
@@ -40,7 +40,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task GetObjectAsync_OperationResult_Test()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string expectedValue = "value";
         const string cacheName = nameof(GetObjectAsync_OperationResult_Test);
         const string cacheKey = "key";
@@ -59,7 +59,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task GetObjectAsync_OperationResult_Fail()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string cacheName = nameof(GetObjectAsync_OperationResult_Fail);
         const string cacheKey = "key";
         var (successful, _, ex, _) = await cacheManager.GetObjectAsync<string>(()
@@ -75,7 +75,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task SetObjectAsync_Raw_Test()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string expectedValue = "value";
         const string cacheName = nameof(SetObjectAsync_Raw_Test);
         const string cacheKey = "key";
@@ -94,7 +94,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task SetObjectAsync_Raw_Fail()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string cacheName = nameof(SetObjectAsync_Raw_Fail);
         const string cacheKey = "key";
         var (successful, _, ex, _) = await cacheManager.SetObjectAsync<string>(() => throw new InvalidOperationException(),
@@ -110,7 +110,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task SetObjectAsync_OperationResult_Test()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string expectedValue = "value";
         const string cacheName = nameof(SetObjectAsync_Raw_Test);
         const string cacheKey = "key";
@@ -129,7 +129,7 @@ public class CacheManagerExtensionsTests : AbpTests<AbpTestModule>
     [Fact]
     public async Task SetObjectAsync_OperationResult_Fail()
     {
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         const string cacheName = nameof(SetObjectAsync_OperationResult_Fail);
         const string cacheKey = "key";
         var (successful, _, ex, _) = await cacheManager.SetObjectAsync<string>(()

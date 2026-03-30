@@ -1,12 +1,12 @@
 namespace AbpEx.Caching;
 
-public class CacheTests : AbpTests<AbpTestModule>
+public class CacheTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
 {
     [Fact]
     public void TestCache()
     {
         const string str = "test";
-        var cacheManager = ServiceProvider.GetRequiredService<ICacheManager>();
+        var cacheManager = Services.GetRequiredService<ICacheManager>();
         var cache = cacheManager.GetCache<string>(str);
         var obj = cache.Get(str, k => str);
         Assert.True(obj.HasValue);

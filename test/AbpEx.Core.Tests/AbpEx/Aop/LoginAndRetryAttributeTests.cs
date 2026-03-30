@@ -1,18 +1,29 @@
 namespace AbpEx.Aop;
 
-public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
+public class LoginAndRetryClient(ILoggerFactory loggerFactory) : UserClient(loggerFactory: loggerFactory)
 {
-    protected override void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
+    [LoginAndRetry]
+    public virtual Task<OperationResult> DoAsync()
     {
-        base.Configure(options, configuration);
-        options.Services.AddUserClient<LoginAndRetryClient>();
+        return IsOnline
+            ? Operation.Success()
+            : Operation.Error("");
     }
 
+    protected override Task<OperationResult> LoginActionAsync(CancellationToken token)
+    {
+        return Operation.Success();
+    }
+}
+
+public class LoginAndRetryAttributeTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
+{
     private LoginAndRetryClient CreateClient()
     {
         var account = new UserAccount("test", "test");
-        var factory = ServiceProvider.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
+        var factory = Services.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
         var client = factory.Create(account);
+        Assert.True(client.IsProxy());
         Assert.IsType<LoginAndRetryClient>(client, false);
         return client;
     }
@@ -20,7 +31,7 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
     [Fact]
     public void Aop_Test()
     {
-        var factory = ServiceProvider.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
+        var factory = Services.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
         var client = factory.Create(new UserAccount("user", "password"));
         Assert.IsNotType<LoginAndRetryClient>(client);
         Assert.True(client.IsProxy());
@@ -30,7 +41,7 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
     public async Task Login_Test()
     {
         var account = new UserAccount("user", "password");
-        var factory = ServiceProvider.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
+        var factory = Services.GetRequiredService<IUserClientFactory<LoginAndRetryClient>>();
         var client = factory.Create(account);
         var result = await client.LoginAsync(CancellationToken);
         Assert.True(result.IsSuccess);
@@ -44,21 +55,5 @@ public class LoginAndRetryAttributeTests : AbpAopTests<AbpTestModule>
         var r = await client.DoAsync();
         Assert.True(r.IsSuccess);
         Assert.True(client.IsOnline);
-    }
-
-    public class LoginAndRetryClient(ILoggerFactory loggerFactory) : UserClient(loggerFactory: loggerFactory)
-    {
-        [LoginAndRetry]
-        public virtual Task<OperationResult> DoAsync()
-        {
-            return IsOnline
-                ? Operation.Success()
-                : Operation.Error("");
-        }
-
-        protected override Task<OperationResult> LoginActionAsync(CancellationToken token)
-        {
-            return Operation.Success();
-        }
     }
 }

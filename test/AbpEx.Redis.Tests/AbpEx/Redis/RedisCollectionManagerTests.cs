@@ -2,14 +2,14 @@ using StackExchange.Redis;
 
 namespace AbpEx.Redis;
 
-public class RedisCollectionManagerTests : AbpRedisTests
+public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixture)
 {
     [RetryFact]
     public void GetList_Test()
     {
         var key = nameof(GetList_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
-        var provider = ServiceProvider.GetRequiredService<IRedisCachingProvider>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
+        var provider = Services.GetRequiredService<IRedisCachingProvider>();
         var col = manager.GetList<string>(key);
 
         var colKey = col.Key;
@@ -29,8 +29,8 @@ public class RedisCollectionManagerTests : AbpRedisTests
     public void GetHash_Test()
     {
         var key = nameof(GetHash_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
-        var provider = ServiceProvider.GetRequiredService<IRedisCachingProvider>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
+        var provider = Services.GetRequiredService<IRedisCachingProvider>();
         var col = manager.GetHash<string>(key);
 
         var colKey = col.Key;
@@ -51,8 +51,8 @@ public class RedisCollectionManagerTests : AbpRedisTests
     public void GetSet_Test()
     {
         var key = nameof(GetSet_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
-        var provider = ServiceProvider.GetRequiredService<IRedisCachingProvider>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
+        var provider = Services.GetRequiredService<IRedisCachingProvider>();
         var col = manager.GetSet<string>(key);
 
         var colKey = col.Key;
@@ -73,9 +73,9 @@ public class RedisCollectionManagerTests : AbpRedisTests
     public void GetSortedSet_Test()
     {
         var key = nameof(GetSortedSet_Test).ToLower();
-        var manager = ServiceProvider.GetRequiredService<IRedisCollectionManager>();
-        var provider = ServiceProvider.GetRequiredService<IRedisCachingProvider>();
-        var database = ServiceProvider.GetRequiredService<IEasyCachingProvider>().Database.CastTo<IDatabase>();
+        var manager = Services.GetRequiredService<IRedisCollectionManager>();
+        var provider = Services.GetRequiredService<IRedisCachingProvider>();
+        var database = Services.GetRequiredService<IEasyCachingProvider>().Database.CastTo<IDatabase>();
 
         var col = manager.GetSortedSet<string>(key);
 

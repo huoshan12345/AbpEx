@@ -2,7 +2,7 @@
 
 global using System;
 global using System.Diagnostics;
-global using System.Diagnostics.CodeAnalysis;
+global using System.Threading.Tasks;
 global using FclEx.Extensions;
 global using FclEx.Logging;
 global using FclEx.Utils;

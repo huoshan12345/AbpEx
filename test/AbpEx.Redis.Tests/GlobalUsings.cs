@@ -11,6 +11,7 @@ global using AbpEx.Xunit;
 global using FclEx.Extensions;
 global using FclEx.Utils;
 global using FclEx.Xunit;
+global using Meziantou.Xunit.v3;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using xRetry.v3;

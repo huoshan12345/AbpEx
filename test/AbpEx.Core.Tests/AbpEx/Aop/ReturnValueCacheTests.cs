@@ -1,68 +1,19 @@
 namespace AbpEx.Aop;
 
-public class ReturnValueCacheTests : AbpAopTests<AbpTestModule>
+public class ReturnValueCacheTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
 {
-    public static readonly TimeSpan CacheMaxTime = TimeSpan.FromMilliseconds(50);
-    public static readonly TimeSpan SleepTime = TimeSpan.FromMilliseconds(100);
+    public static TimeSpan CacheMaxTime => Service.CacheMaxTime;
+    public static TimeSpan SleepTime => Service.SleepTime;
 
     public static IEnumerable<object[]> Numbers { get; } = new[] { -1, 0, 1, 10 }
         .Select(m => new object[] { m })
         .ToArray();
 
-    protected override void Configure(AbpApplicationCreationOptions options, IConfigurationRoot configuration)
-    {
-        base.Configure(options, configuration);
-        options.Services.AddTransient<IService, Service>();
-    }
-
-    public class Model(string id)
-    {
-        public string Id { get; } = id;
-    }
-
-    public interface IService
-    {
-        int Id { get; }
-
-        [ReturnValueCache(IsStatic = true)]
-        Model GetStatic(int id);
-
-        [ReturnValueCache]
-        Model Get(int id);
-    }
-
-    public class Service : IService
-    {
-        private static int _id = short.MinValue;
-        public int Id { get; }
-
-        public Service()
-        {
-            Id = Interlocked.Increment(ref _id);
-        }
-
-        public Model GetStatic(int id)
-        {
-            Thread.Sleep(SleepTime);
-            return new Model(id.ToString());
-        }
-
-        public Model Get(int id)
-        {
-            Thread.Sleep(SleepTime);
-            return new Model($"{Id}_{id}");
-        }
-
-        public override int GetHashCode()
-        {
-            return Id;
-        }
-    }
 
     [Fact]
     public void Aop_Test()
     {
-        var service = ServiceProvider.GetRequiredService<IService>();
+        var service = Services.GetRequiredService<IService>();
         Assert.IsNotType<Service>(service);
         Assert.True(service.IsProxy());
     }
@@ -71,7 +22,7 @@ public class ReturnValueCacheTests : AbpAopTests<AbpTestModule>
     [MemberData(nameof(Numbers))]
     public void SameInstance_Test(int no)
     {
-        var service = ServiceProvider.GetRequiredService<IService>();
+        var service = Services.GetRequiredService<IService>();
         var itemFromStatic = service.GetStatic(no);
         var itemFromInstance = service.Get(no);
 
@@ -109,12 +60,12 @@ public class ReturnValueCacheTests : AbpAopTests<AbpTestModule>
     [MemberData(nameof(Numbers))]
     public void DifferentInstance_Test(int no)
     {
-        var service = ServiceProvider.GetRequiredService<IService>();
+        var service = Services.GetRequiredService<IService>();
         var itemFromStatic = service.GetStatic(no);
 
         for (var i = 0; i < 2; i++)
         {
-            var tempService = ServiceProvider.GetRequiredService<IService>(); // new instance
+            var tempService = Services.GetRequiredService<IService>(); // new instance
 
             var (_, fromStatic, _, timeFromStatic) = Operation.Execute(() => tempService.GetStatic(no));
             var (_, fromInstance, _, timeFromInstance) = Operation.Execute(() => tempService.Get(no)); // should not be cached
