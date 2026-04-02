@@ -4,7 +4,7 @@
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);CS1591;NU1507</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;NU1507;NU5104</NoWarn>
     <PackageTags>extensions;helpers</PackageTags>
     <Authors>huoshan12345</Authors>
     <Copyright>huoshan12345</Copyright>
