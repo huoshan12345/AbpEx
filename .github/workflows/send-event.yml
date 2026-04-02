@@ -1,4 +1,4 @@
-name: send-event
+name: Send Event
 on:
   push:
     branches:
