@@ -20,10 +20,7 @@
 
   <ItemGroup>
     <!--把这个文件映射到根目录然后再设置不可见, 这样就不会在IDE里看到这个文件了-->
-    <Content Include="$(GeneratedSourceDir)\AbpEx.SourceGenerator\AbpEx.SourceGenerator\AbpCoreUsings.cs"
-             Link="AbpCoreUsings.cs"
-             Pack="true"
-             PackagePath="content\" />
+    <Content Include="$(GeneratedSourceDir)\AbpEx.SourceGenerator\AbpEx.SourceGenerator\AbpCoreUsings.cs" Link="AbpCoreUsings.cs" Pack="true" PackagePath="content\" />
     <Content Include="AbpEx.Core.props" Pack="true" BuildAction="None" PackagePath="buildTransitive\AbpEx.Core.props" />
     <Content Include="AbpEx.Core.targets" Pack="true" BuildAction="None" PackagePath="buildTransitive\AbpEx.Core.targets" />
   </ItemGroup>

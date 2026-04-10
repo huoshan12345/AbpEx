@@ -5,7 +5,7 @@
     <CompilerGeneratedFilesOutputPath>$(GeneratedSourceDir.TrimEnd('\'))</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' AND $(GITHUB_ACTION) == '' AND '$(OS)' == 'Windows_NT' ">
     <None Include="$(GeneratedSourceDir)**\*$(DefaultLanguageSourceExtension)">
       <!--this is the path that ends with source generator name -->
       <FolderPath>$([System.IO.Directory]::GetParent(%(FullPath)))</FolderPath>
