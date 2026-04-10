@@ -1,9 +1,10 @@
-using FclEx.DependencyInjection;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Internal.Telemetry;
-using Volo.Abp.Internal.Telemetry.Activity.Contracts;
 using Volo.Abp.Internal.Telemetry.Activity.Providers;
 
 namespace AbpEx;
+
+extern alias AbpCore;
 
 public class AbpExModule : AbpModule
 {

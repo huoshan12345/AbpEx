@@ -18,9 +18,11 @@
     <File Path="src/Directory.Build.props" />
     <File Path="src/Directory.Build.targets" />
     <File Path="src/Directory.Packages.props" />
+    <File Path="src/EmitGeneratedFiles.props" />
     <Project Path="src/AbpEx.Core/AbpEx.Core.csproj" />
     <Project Path="src/AbpEx.LightInject/AbpEx.LightInject.csproj" />
     <Project Path="src/AbpEx.Redis/AbpEx.Redis.csproj" />
+    <Project Path="src/AbpEx.SourceGenerator/AbpEx.SourceGenerator.csproj" />
     <Project Path="src/AbpEx.Xunit.v3/AbpEx.Xunit.v3.csproj" />
     <Project Path="src/AbpEx.Xunit/AbpEx.Xunit.csproj" />
   </Folder>
