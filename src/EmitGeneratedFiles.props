@@ -2,7 +2,7 @@
   <PropertyGroup>
     <GeneratedSourceDir>$(MSBuildProjectDirectory)\obj\Generated\</GeneratedSourceDir>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(GeneratedSourceDir.TrimEnd('\'))</CompilerGeneratedFilesOutputPath>
+    <CompilerGeneratedFilesOutputPath>$(GeneratedSourceDir.TrimEnd('\').TrimEnd('/'))</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' AND $(GITHUB_ACTION) == '' AND '$(OS)' == 'Windows_NT' ">
