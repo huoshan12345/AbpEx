@@ -31,6 +31,7 @@ public class AbpCoreUsingsSource
             namespaces.Add(current.ToDisplayString());
         }
 
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var ns in namespaces)
         {
             if (ns == "System" || ns.StartsWith("System."))
@@ -41,6 +42,7 @@ public class AbpCoreUsingsSource
 
         builder.WriteLine();
         builder.WriteLine("global using Check = FclEx.Check;");
+        builder.WriteLine("global using FileHelper = FclEx.Helpers.FileHelper;");
 
         return new SourceInfo(true, "AbpCoreUsings.cs", builder.ToString());
     }
