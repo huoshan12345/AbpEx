@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <NoWarn>$(NoWarn);CS1591;NU1507;NU5104</NoWarn>
+    <WarningsAsErrors>CS8785</WarningsAsErrors>
     <PackageTags>extensions;helpers</PackageTags>
     <Authors>huoshan12345</Authors>
     <Copyright>huoshan12345</Copyright>
