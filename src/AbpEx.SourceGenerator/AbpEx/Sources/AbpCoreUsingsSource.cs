@@ -1,8 +1,16 @@
-﻿namespace AbpEx.Sources;
+﻿using System.Text.RegularExpressions;
+
+namespace AbpEx.Sources;
 
 public class AbpCoreUsingsSource
 {
     public const string Alias = "AbpCore";
+
+    public static readonly Regex[] ExcludeNamespacePatterns =
+    [
+        new(@"^System(\.|$)"),
+        new(@"^Volo\.Abp\.Threading$"),
+    ];
 
     public static SourceInfo Generate(IAssemblySymbol abpCoreAssembly)
     {
@@ -34,7 +42,7 @@ public class AbpCoreUsingsSource
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var ns in namespaces)
         {
-            if (ns == "System" || ns.StartsWith("System."))
+            if (ExcludeNamespacePatterns.Any(p => p.IsMatch(ns)))
                 continue;
 
             builder.WriteLine($"global using {Alias}::{ns};");
