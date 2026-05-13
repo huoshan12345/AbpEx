@@ -1,6 +1,5 @@
 using System;
 using System.Security.Cryptography;
-using AbpEx.Caching;
 using AspectCore.DynamicProxy;
 
 namespace AbpEx.Aop;
@@ -15,15 +14,15 @@ public class ReturnValueCacheAttribute : AbstractInterceptorAttribute
     private bool? _isStatic;
     public bool IsStatic
     {
-        set => _isStatic = value;
         get => _isStatic ?? default;
+        set => _isStatic = value;
     }
 
     private int? _expireSeconds;
     public int ExpireSeconds
     {
-        set => _expireSeconds = value;
         get => _expireSeconds ?? default;
+        set => _expireSeconds = value;
     }
 
     // null instance means a static key
