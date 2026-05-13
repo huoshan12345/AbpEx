@@ -7,6 +7,9 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetList_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(GetList_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -28,6 +31,9 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetHash_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(GetHash_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -50,6 +56,9 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetSet_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(GetSet_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -63,8 +72,8 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
         Assert.Equal(colKey, col.Key);
 
         col.SAdd(key);
-        Assert.Equal(1, col.SCard());
 
+        Assert.Equal(1, col.SCard());
         Assert.True(provider.KeyExists(colKey));
         Assert.Equal(1, provider.SCard(col.Key));
     }
@@ -72,6 +81,9 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetSortedSet_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(GetSortedSet_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -87,12 +99,9 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
         Assert.Equal(colKey, col.Key);
 
         col.ZAdd(key, 1);
+
         Assert.Equal(1, database.SortedSetLength(colKey));
-
-
-
         Assert.Equal(1, col.ZCount(0, 10));
-
         Assert.True(provider.KeyExists(colKey));
         Assert.Equal(1, provider.ZCount(colKey, 0, 10));
     }

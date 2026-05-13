@@ -22,6 +22,9 @@ public class RedisCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtu
     [RetryFact]
     public void Basic_Test()
     {
+        if (Skip)
+            return;
+
         var name = nameof(Basic_Test) + Environment.Version.Major;
         var provider = Services.GetRequiredService<IEasyCachingProvider>();
         Assert.IsType<PatchedRedisCachingProvider>(provider);
@@ -63,6 +66,9 @@ public class RedisCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtu
     [RetryFact]
     public void GetAll_Test()
     {
+        if (Skip)
+            return;
+
         var cacheManager = Services.GetRequiredService<ICacheManager>();
         var cache = cacheManager.GetCache<string>(nameof(GetAll_Test) + Environment.Version.Major);
         var keys = Enumerable.Range(1, 3).Select(m => m.ToString()).ToArray();
@@ -85,6 +91,9 @@ public class RedisCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtu
     [RetryFact]
     public async Task GetAllAsync_Test()
     {
+        if (Skip)
+            return;
+
         var cacheManager = Services.GetRequiredService<ICacheManager>();
         var cache = cacheManager.GetCache<string>(nameof(GetAllAsync_Test) + Environment.Version.Major);
         var keys = Enumerable.Range(1, 3).Select(m => m.ToString()).ToArray();

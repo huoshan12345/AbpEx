@@ -21,4 +21,7 @@ public class AbpRedisTests : AbpTests<AbpRedisTestsFixture, AbpRedisTestsModule>
         _abpRedisOptions = new Lazy<AbpRedisOptions>(() => Services.GetOptions<AbpRedisOptions>(), true);
         _abpCacheOptions = new Lazy<AbpCacheOptions>(() => Services.GetOptions<AbpCacheOptions>(), true);
     }
+
+    // there is no Redis server in GitHub Action Windows runner.
+    public static bool Skip => TestHelper.IsGithubAction && TestHelper.IsWindows;
 }

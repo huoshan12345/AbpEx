@@ -5,7 +5,7 @@ public class LoginAndRetryClient(ILoggerFactory loggerFactory) : UserClient(logg
     [LoginAndRetry]
     public virtual Task<OperationResult> DoAsync()
     {
-        return IsOnline
+        return this.IsOnline
             ? Operation.Success()
             : Operation.Error("");
     }

@@ -5,6 +5,9 @@ public class RedisHashTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtur
     [RetryFact]
     public void HSet_HGet_String_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(HSet_HGet_String_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
@@ -18,6 +21,9 @@ public class RedisHashTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtur
     [RetryFact]
     public void Provider_HmSet_HmGet_String_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(Provider_HmSet_HmGet_String_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
@@ -35,6 +41,9 @@ public class RedisHashTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtur
     [RetryFact]
     public void HmSet_HmGet_String_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(HmSet_HmGet_String_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
@@ -52,6 +61,9 @@ public class RedisHashTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtur
     [RetryFact]
     public async Task HmSetAsync_HmGetAsync_String_Test()
     {
+        if (Skip)
+            return;
+
         var key = nameof(HmSetAsync_HmGetAsync_String_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var col = manager.GetHash<string>(key);
