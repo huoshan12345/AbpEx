@@ -3,8 +3,8 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="AspectCore.Extensions.DependencyInjection" Version="2.4.1-preview.1" />
-    <PackageVersion Include="AspectCore.Extensions.LightInject" Version="2.4.1-preview.1" />
+    <PackageVersion Include="AspectCore.Extensions.DependencyInjection" Version="2.4.1-preview.2" />
+    <PackageVersion Include="AspectCore.Extensions.LightInject" Version="2.4.1-preview.2" />
     <PackageVersion Include="EasyCaching.InMemory" Version="1.9.2" />
     <PackageVersion Include="EasyCaching.Redis" Version="1.9.2" />
     <PackageVersion Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
