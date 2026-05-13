@@ -44,6 +44,9 @@ public class RedisCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtu
     [Fact]
     public void Serializer_Test()
     {
+        if (Skip)
+            return;
+
         var provider = Services.GetRequiredService<IEasyCachingProvider>();
         Assert.IsType<PatchedRedisCachingProvider>(provider);
 
@@ -108,7 +111,7 @@ public class RedisCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixtu
 
         foreach (var key in keys)
         {
-            AssertEx.True(all.TryGetValue(key, out var value), () => $"keys: {all.Keys.JoinWith(" ")}, cache key: {cache.Prefix}");
+            Assert.True(all.TryGetValue(key, out var value), () => $"keys: {all.Keys.JoinWith(" ")}, cache key: {cache.Prefix}");
             Assert.True(value!.HasValue);
             Assert.Equal(key + key, value.Value);
         }
