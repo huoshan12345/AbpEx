@@ -31,7 +31,7 @@ env:
   USE_NUGET: true
   USE_MYGET: false
   ARTIFACTS_NAME: nuget-packages
-  ARTIFACTS_DIR: /artifacts/nuget/
+  ARTIFACTS_DIR: ./artifacts/nuget/
 
 jobs:
   build:
