@@ -82,6 +82,11 @@ jobs:
 
   build-win:
     runs-on: windows-latest
+    env:
+      DOTNET_INSTALL_DIR: D:\tools\dotnet
+      NUGET_PACKAGES: D:\.nuget\packages
+      COMPlus_ReadyToRun: 0
+      COMPlus_ZapDisable: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v6
