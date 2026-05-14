@@ -15,7 +15,13 @@ public class HostBuilderExtensionsTests
 
         using var host = builder.Build();
         await host.Services.UseAbpAsync();
-        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(0.2));
-        await host.RunAsync(cts.Token);
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(0.5));
+        try
+        {
+            await host.RunAsync(cts.Token);
+        }
+        catch (OperationCanceledException ex) when (ex.CancellationToken == cts.Token && cts.IsCancellationRequested)
+        {
+        }
     }
 }
