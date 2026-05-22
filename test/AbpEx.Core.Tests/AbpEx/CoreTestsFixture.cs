@@ -41,7 +41,15 @@ public class CoreTestsFixture<TModule> : IAsyncLifetime where TModule : AbpModul
 
     protected virtual IConfiguration BuildConfig()
     {
-        return new ConfigurationBuilder().Build();
+        var env = TestHelper.IsGithubAction ? "github" : "local";
+
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", false, false)
+            .AddJsonFile("appsettings.decrypted.json", true, false)
+            .AddJsonFile($"appsettings.{env}.json", true, false);
+
+        return builder.Build();
     }
 
     public ValueTask DisposeAsync()
