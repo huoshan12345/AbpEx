@@ -16,7 +16,7 @@ public class LoginAndRetryClient(ILoggerFactory loggerFactory) : UserClient(logg
     }
 }
 
-public class LoginAndRetryAttributeTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
+public class LoginAndRetryAttributeTests(CoreTestsFixture fixture) : CoreTests(fixture)
 {
     private LoginAndRetryClient CreateClient()
     {

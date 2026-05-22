@@ -3,8 +3,8 @@ using Volo.Abp.Modularity;
 
 namespace AbpEx.Redis;
 
-[DependsOn(typeof(AbpExRedisModule), typeof(AbpExTestsModule))]
-public class AbpRedisTestsModule : AbpModule
+[DependsOn(typeof(AbpExRedisModule), typeof(CoreTestsTestsModule))]
+public class RedisTestsModule : AbpModule
 {
     public const string RedisSectionKey = "Redis";
 

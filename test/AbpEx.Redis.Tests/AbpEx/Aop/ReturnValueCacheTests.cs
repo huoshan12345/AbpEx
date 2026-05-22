@@ -3,7 +3,7 @@ using AspectCore.DynamicProxy;
 
 namespace AbpEx.Aop;
 
-public class ReturnValueCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixture)
+public class ReturnValueCacheTests(RedisTestsFixture fixture) : RedisTests(fixture)
 {
     public static IEnumerable<object[]> Numbers { get; } = new[] { -1, 0, 1, 10 }
         .Select(m => new object[] { m }).ToArray();
@@ -23,9 +23,6 @@ public class ReturnValueCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests
     [MemberData(nameof(Numbers))]
     public void IsStatic_SameObject_Test(int no)
     {
-        if (Skip)
-            return;
-
         var name = nameof(IsStatic_SameObject_Test) + no;
         var service = Services.GetRequiredService<IRedisService>();
         var itemFromStatic = service.GetStatic(name);
@@ -40,9 +37,6 @@ public class ReturnValueCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests
     [MemberData(nameof(Numbers))]
     public void IsStatic_DiffObject_Test(int no)
     {
-        if (Skip)
-            return;
-
         var name = nameof(IsStatic_DiffObject_Test) + no;
         var service = Services.GetRequiredService<IRedisService>();
         var itemFromStatic = service.GetStatic(name);
@@ -59,9 +53,6 @@ public class ReturnValueCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests
     [MemberData(nameof(Numbers))]
     public void NotStatic_SameObject_Test(int no)
     {
-        if (Skip)
-            return;
-
         var name = nameof(NotStatic_SameObject_Test) + no;
         var service = Services.GetRequiredService<IRedisService>();
         var fromInstance = service.Get(name);
@@ -76,9 +67,6 @@ public class ReturnValueCacheTests(AbpRedisTestsFixture fixture) : AbpRedisTests
     [MemberData(nameof(Numbers))]
     public void NotStatic_DiffObject_Test(int no)
     {
-        if (Skip)
-            return;
-
         var name = nameof(NotStatic_DiffObject_Test) + no;
         var service = Services.GetRequiredService<IRedisService>();
         var fromInstance = service.Get(name);

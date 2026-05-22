@@ -11,7 +11,7 @@ public class HostBuilderExtensionsTests
     {
         var builder = new HostBuilder()
             .UseLightInject(useAop)
-            .ConfigureServices((context, services) => services.AddApplication<AbpExTestsModule>());
+            .ConfigureServices((context, services) => services.AddApplication<CoreTestsTestsModule>());
 
         using var host = builder.Build();
         await host.Services.UseAbpAsync();

@@ -1,14 +1,12 @@
 namespace AbpEx.Redis;
 
-public class AbpRedisUnreachableTestsFixture : AbpTestsFixture<AbpRedisTestsModule>
+public class RedisUnreachableTestsFixture : RedisTestsFixture
 {
-    protected override bool UseAop => true;
-
     protected override IConfiguration BuildConfig()
     {
         return new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile("appsettings.Unreachable.json", false, false)
+            .AddJsonFile("appsettings.unreachable.json", false, false)
             .Build();
     }
 }

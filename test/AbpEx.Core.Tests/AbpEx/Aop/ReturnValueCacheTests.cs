@@ -1,6 +1,6 @@
 namespace AbpEx.Aop;
 
-public class ReturnValueCacheTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
+public class ReturnValueCacheTests(CoreTestsFixture fixture) : CoreTests(fixture)
 {
     public static TimeSpan CacheMaxTime => Service.CacheMaxTime;
     public static TimeSpan SleepTime => Service.SleepTime;
@@ -51,7 +51,7 @@ public class ReturnValueCacheTests(AbpExTestsFixture fixture) : AbpExTests(fixtu
     public void Error_Test()
     {
         Interlocked.Increment(ref _errorCount);
-        Logger.LogInformation("Current error count: {ErrorCount}", _errorCount);
+        Output?.WriteLine("Current error count: {0}", _errorCount);
 
         Assert.True(_errorCount >= 3); // Retry 3 times
     }

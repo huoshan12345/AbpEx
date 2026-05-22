@@ -4,7 +4,6 @@ using AspectCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Volo.Abp;
 
 namespace AbpEx;
 

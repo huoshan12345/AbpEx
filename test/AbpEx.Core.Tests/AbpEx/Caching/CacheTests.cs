@@ -1,6 +1,6 @@
 namespace AbpEx.Caching;
 
-public class CacheTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
+public class CacheTests(CoreTestsFixture fixture) : CoreTests(fixture)
 {
     [Fact]
     public void TestCache()

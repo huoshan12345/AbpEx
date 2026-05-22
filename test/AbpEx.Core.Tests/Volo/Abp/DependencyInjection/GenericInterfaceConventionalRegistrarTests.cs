@@ -2,7 +2,7 @@ using AbpEx;
 
 namespace Volo.Abp.DependencyInjection;
 
-public class GenericInterfaceConventionalRegistrarTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
+public class GenericInterfaceConventionalRegistrarTests(CoreTestsFixture fixture) : CoreTests(fixture)
 {
     public interface IGenericSingleton<out T> : ISingletonDependency;
     public class GenericSingleton : IGenericSingleton<string>;

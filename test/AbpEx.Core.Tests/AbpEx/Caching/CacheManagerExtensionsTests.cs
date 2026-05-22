@@ -1,6 +1,6 @@
 namespace AbpEx.Caching;
 
-public class CacheManagerExtensionsTests(AbpExTestsFixture fixture) : AbpExTests(fixture)
+public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(fixture)
 {
     [Fact]
     public async Task GetObjectAsync_Raw_Test()

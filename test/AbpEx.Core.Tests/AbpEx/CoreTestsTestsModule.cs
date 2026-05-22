@@ -5,7 +5,7 @@ using static AbpEx.Aop.ReturnValueCacheTests;
 namespace AbpEx;
 
 [DependsOn(typeof(AbpExModule))]
-public class AbpExTestsModule : AbpModule
+public class CoreTestsTestsModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

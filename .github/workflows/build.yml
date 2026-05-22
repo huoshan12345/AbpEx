@@ -36,14 +36,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      redis:
-        image: redis:7
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     outputs:
       version: ${{ steps.set_version.outputs.version }}
 
@@ -63,6 +55,19 @@ jobs:
         with:
           ref: ${{ steps.pr.outputs.merge_commit_sha }}
 
+      - name: Setup sops
+        uses: nhedger/setup-sops@v2
+
+      - name: Setup age
+        uses: alessiodionisi/setup-age-action@v1.4.0
+
+      - name: Decrypt appsettings
+        shell: pwsh
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          ./build/decrypt.ps1
+
       - name: Setup dotnet
         uses: actions/setup-dotnet@v5
         with:
@@ -79,7 +84,7 @@ jobs:
 
       - name: Test Release
         timeout-minutes: 10
-        run: dotnet test ${{ env.SOLUTION }} -c Release --no-restore --no-build
+        run: dotnet test /nr:false ${{ env.SOLUTION }} -c Release --no-restore --no-build
 
       - name: Test Report
         uses: dorny/test-reporter@main
@@ -100,8 +105,11 @@ jobs:
           echo $ver
 
       - name: Pack
+        shell: pwsh
         run: >
-          dotnet pack ${{ env.SOLUTION }} -v q -c Release --no-restore --no-build --include-symbols -p:SymbolPackageFormat=snupkg -p:PackageVersion=${{ steps.set_version.outputs.version }} -o ${{ env.ARTIFACTS_DIR }}
+          dotnet pack ${{ env.SOLUTION }} -v q -c Release --no-restore --no-build `
+          --include-symbols -p:SymbolPackageFormat=snupkg -p:PackageVersion=${{ steps.set_version.outputs.version }} `
+          -o ${{ env.ARTIFACTS_DIR }}
 
       - name: Upload
         uses: actions/upload-artifact@v7
@@ -132,6 +140,23 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: ${{ steps.pr.outputs.merge_commit_sha }}
+
+      - name: Setup sops
+        shell: pwsh
+        run: |
+          choco install sops -y --no-progress
+
+      - name: Setup age
+        shell: pwsh
+        run: |
+          choco install age.portable -y --no-progress
+
+      - name: Decrypt appsettings
+        shell: pwsh
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          ./build/decrypt.ps1
 
       - name: Check missing SDKs
         id: sdk_check
@@ -164,12 +189,17 @@ jobs:
         if: steps.sdk_check.outputs.missing != ''
         uses: actions/setup-dotnet@v5
         with:
-          cache: true
           dotnet-version: ${{ steps.sdk_check.outputs.missing }}
+
+      - name: Restore
+        run: dotnet restore ${{ env.SOLUTION }} -v q
+
+      - name: Build
+        run: dotnet build ${{ env.SOLUTION }} -c Release --no-restore
 
       - name: Test Release
         timeout-minutes: 10
-        run: dotnet test ${{ env.SOLUTION }} -c Release
+        run: dotnet test /nr:false ${{ env.SOLUTION }} -c Release --no-restore --no-build
 
       - name: Test Report
         uses: dorny/test-reporter@main
@@ -204,13 +234,21 @@ jobs:
 
       - name: NuGet Publish
         if: env.USE_NUGET == 'true'
-        run: >
-          dotnet nuget push "${{ env.ARTIFACTS_DIR }}*.nupkg" --api-key "${{ secrets.NUGET_APIKEY }}" --source "${{ env.NUGET_SOURCE }}" --skip-duplicate
+        shell: pwsh
+        run: |
+          dotnet nuget push "${{ env.ARTIFACTS_DIR }}*.nupkg" `
+            --api-key "${{ secrets.NUGET_APIKEY }}" `
+            --source "${{ env.NUGET_SOURCE }}" `
+            --skip-duplicate
 
       - name: MyGet Publish
         if: env.USE_MYGET == 'true'
-        run: >
-          dotnet nuget push "${{ env.ARTIFACTS_DIR }}*.nupkg" --api-key "${{ secrets.MYGET_APIKEY }}" --source "${{ env.MYGET_SOURCE }}" --skip-duplicate
+        shell: pwsh
+        run: |
+          dotnet nuget push "${{ env.ARTIFACTS_DIR }}*.nupkg" `
+            --api-key "${{ secrets.MYGET_APIKEY }}" `
+            --source "${{ env.MYGET_SOURCE }}" `
+            --skip-duplicate
 
       - name: Set version
         shell: pwsh

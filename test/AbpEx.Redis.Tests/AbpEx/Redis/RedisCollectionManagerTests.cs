@@ -2,14 +2,11 @@ using StackExchange.Redis;
 
 namespace AbpEx.Redis;
 
-public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedisTests(fixture)
+public class RedisCollectionManagerTests(RedisTestsFixture fixture) : RedisTests(fixture)
 {
     [RetryFact]
     public void GetList_Test()
     {
-        if (Skip)
-            return;
-
         var key = nameof(GetList_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -31,9 +28,6 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetHash_Test()
     {
-        if (Skip)
-            return;
-
         var key = nameof(GetHash_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -56,9 +50,6 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetSet_Test()
     {
-        if (Skip)
-            return;
-
         var key = nameof(GetSet_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
@@ -81,9 +72,6 @@ public class RedisCollectionManagerTests(AbpRedisTestsFixture fixture) : AbpRedi
     [RetryFact]
     public void GetSortedSet_Test()
     {
-        if (Skip)
-            return;
-
         var key = nameof(GetSortedSet_Test).ToLower();
         var manager = Services.GetRequiredService<IRedisCollectionManager>();
         var provider = Services.GetRequiredService<IRedisCachingProvider>();
