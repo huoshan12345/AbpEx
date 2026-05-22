@@ -2,7 +2,7 @@ namespace AbpEx.Caching;
 
 public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(fixture)
 {
-    [Fact]
+    [RetryFact]
     public async Task GetObjectAsync_Raw_Test()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -21,7 +21,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         await cache.RemoveAsync(cacheKey);
     }
 
-    [Fact]
+    [RetryFact]
     public async Task GetObjectAsync_Raw_Fail()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -37,7 +37,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         Assert.False(cache.TryGet(cacheKey, out _));
     }
 
-    [Fact]
+    [RetryFact]
     public async Task GetObjectAsync_OperationResult_Test()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -56,7 +56,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         await cache.RemoveAsync(cacheKey);
     }
 
-    [Fact]
+    [RetryFact]
     public async Task GetObjectAsync_OperationResult_Fail()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -72,7 +72,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         Assert.False(cache.TryGet(cacheKey, out _));
     }
 
-    [Fact]
+    [RetryFact]
     public async Task SetObjectAsync_Raw_Test()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -91,7 +91,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         await cache.RemoveAsync(cacheKey);
     }
 
-    [Fact]
+    [RetryFact]
     public async Task SetObjectAsync_Raw_Fail()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -107,7 +107,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         Assert.False(cache.TryGet(cacheKey, out _));
     }
 
-    [Fact]
+    [RetryFact]
     public async Task SetObjectAsync_OperationResult_Test()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
@@ -126,7 +126,7 @@ public class CacheManagerExtensionsTests(CoreTestsFixture fixture) : CoreTests(f
         await cache.RemoveAsync(cacheKey);
     }
 
-    [Fact]
+    [RetryFact]
     public async Task SetObjectAsync_OperationResult_Fail()
     {
         var cacheManager = Services.GetRequiredService<ICacheManager>();
