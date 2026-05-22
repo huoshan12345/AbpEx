@@ -4,6 +4,7 @@
     <File Path=".github/workflows/send-event.yml" />
   </Folder>
   <Folder Name="/build/">
+    <File Path="build/.sops.yaml" />
     <File Path="build/bump-version.ps1" />
     <File Path="build/clean.ps1" />
     <File Path="build/decrypt.ps1" />

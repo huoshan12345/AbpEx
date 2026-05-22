@@ -1,5 +1,5 @@
 $rootDir = [io.path]::combine($PSScriptRoot, "..")
-$settingsDir = [io.path]::combine($rootDir, "test", "FclEx.Core.Tests")
+$settingsDir = [io.path]::combine($rootDir, "test", "AbpEx.Core.Tests")
 $encryptedPath = [io.path]::combine($settingsDir, "appsettings.encrypted.json")
 $decryptedPath = [io.path]::combine($settingsDir, "appsettings.decrypted.json")
 
